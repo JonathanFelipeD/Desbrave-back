@@ -1,8 +1,8 @@
-package repository;
+package com.Desbrave.Desbrave.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import model.Usuario;
+import com.Desbrave.Desbrave.model.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario,Long> {
 
