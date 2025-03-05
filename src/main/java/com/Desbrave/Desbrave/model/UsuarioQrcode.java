@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "usuario_QrCode")
+@Table(name = "usuarioQrCode")
 public class UsuarioQrCode {
     
     @Id
@@ -37,9 +37,9 @@ public class UsuarioQrCode {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    // @ManyToOne
-    // @JoinColumn(name = "qr_code_id")
-    // private QrCode qrCode;
+    @ManyToOne
+    @JoinColumn(name = "qr_code_id")
+    private QrCode qrCode;
 
 
 
