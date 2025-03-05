@@ -1,7 +1,8 @@
 package com.Desbrave.Desbrave.constants;
 
-public enum tipoUsuario{
+public enum TipoUsuario{
     ADMIN,
-    ALUNO;
+    USUARIO_COMUM,
+    MODERADOR;
 
 }

@@ -5,19 +5,20 @@ package com.Desbrave.Desbrave.model;
 import java.time.LocalDate;
 import java.util.Date;
 
-import com.Desbrave.Desbrave.constants.tipoUsuario;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.Desbrave.Desbrave.constants.TipoUsuario;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,9 +45,9 @@ public class Usuario {
     private Date dataNascimento;
 
     @Column(nullable = false)
-    private Enum<tipoUsuario> tipoUsuario; 
+    private TipoUsuario tipoUsuario; 
 
-    @Temporal(TemporalType.DATE)
+   
     @Column(nullable = false)
     private LocalDate dataCriacao;
 
@@ -54,7 +55,11 @@ public class Usuario {
     @Column(nullable = true)
     private long pontuacaoTotal;
 
-
+    //ao criar o usuario, ele add a data de criação automatico
+    @PrePersist
+    protected void onCreate(){
+        this.dataCriacao = LocalDate.now();
+    }
 
 
     
