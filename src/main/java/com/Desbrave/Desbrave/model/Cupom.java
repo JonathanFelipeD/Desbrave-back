@@ -1,5 +1,7 @@
 package com.Desbrave.Desbrave.model;
 
+import java.math.BigDecimal;
+
 import com.Desbrave.Desbrave.constants.TipoCupom;
 
 import jakarta.persistence.Column;
@@ -30,7 +32,7 @@ public class Cupom {
     private String codigo;
 
     @Column(nullable = false, length = 20)
-    private Double desconto;
+    private BigDecimal desconto;
 
 
     @Column(nullable = false)
