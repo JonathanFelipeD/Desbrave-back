@@ -1,4 +1,4 @@
-package com.Desbrave.Desbrave.model;
+package com.Desbrave.Desbrave.constants;
 
 public enum Titulo {
     ANUNCIO,
