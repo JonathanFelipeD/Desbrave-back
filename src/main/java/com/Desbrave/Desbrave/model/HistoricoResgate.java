@@ -37,11 +37,11 @@ public class HistoricoResgate {
     @Column(name = "tipo_resgate")
     private TipoResgate tipoResgate;
 
-    // @ManyToOne
-    // @JoinColumn(name = "parceriaCupom_id")
-    // private ParceriaCupom parceriaCupom;
+    //  @ManyToOne
+    //  @JoinColumn(name = "parceriaCupom_id")
+    //  private ParceriaCupom parceriaCupom;
 
-    // @ManyToAny
-    // @JoinColumn(name = "cupom_id")
-    // private Cupom cupom;
+    @ManyToOne
+    @JoinColumn(name = "cupom_id")
+    private Cupom cupom;
 }
