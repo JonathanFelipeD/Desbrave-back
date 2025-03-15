@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import com.Desbrave.Desbrave.model.Forum;
 import com.Desbrave.Desbrave.repository.ForumRepository;
 @RestController
@@ -34,8 +35,13 @@ public class ForumController {
     public Forum getForumById(@PathVariable Integer id){
         return forumRepository.findById(id).orElseThrow(()-> new RuntimeException("Forum Não Encontrado"));
 
-    
     }
+
+    @DeleteMapping("/{id}")
+        public void deletarForum(@PathVariable Integer id){
+            forumRepository.deleteById(id);   
+        } 
+    
 
 
 
