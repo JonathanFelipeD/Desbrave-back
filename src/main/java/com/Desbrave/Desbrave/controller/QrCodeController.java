@@ -31,6 +31,7 @@ public class QrCodeController {
     }
 
     //listar os qrcode
+    @GetMapping
     public List<QrCode> listaQrCodes(){
         return qrCodeRepository.findAll();
     }
