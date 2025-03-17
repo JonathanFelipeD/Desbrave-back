@@ -1,4 +1,5 @@
 package com.Desbrave.Desbrave.model;
+
 import com.Desbrave.Desbrave.constants.TipoParceria;
 import com.Desbrave.Desbrave.constants.StatusParceria;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -22,20 +24,24 @@ public class Parceria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idParceria")
     private Integer idParceria;
+
     @Column(nullable = false, length = 100)
     private String nome;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoParceria tipo;
+
     @Column(columnDefinition = "TEXT")
     private String descricao;
+
     @Column(length = 100)
     private String contato;
+
     @Column(length = 100)
     private String localizacao;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private StatusParceria status;
 }
-
-
