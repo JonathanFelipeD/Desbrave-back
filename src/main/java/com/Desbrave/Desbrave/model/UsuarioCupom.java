@@ -39,9 +39,9 @@ public class UsuarioCupom {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
-    // @ManyToOne
-    // @JoinColumn(name = "cupom_id")
-    // private Cupom cupom;
+    @ManyToOne
+    @JoinColumn(name = "cupom_id")
+    private Cupom cupom;
 
 
     @PrePersist
