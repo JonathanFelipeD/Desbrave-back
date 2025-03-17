@@ -28,7 +28,7 @@ public class Postagem {
     private Long id;
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false)   
     private String counteudo;
 
     @Column(nullable= false)
