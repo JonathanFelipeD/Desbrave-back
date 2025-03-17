@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;   
 
 import com.Desbrave.Desbrave.model.Postagem;
 import com.Desbrave.Desbrave.repository.PostagemRepository;
