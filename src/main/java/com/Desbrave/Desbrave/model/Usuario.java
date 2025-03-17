@@ -30,8 +30,8 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 255)
-    private String nomeCompleto;
+    @Column(nullable = false, length = 20, unique = true)
+    private String nomeUsuario;
 
     @Column(nullable = false, length = 100, unique = true)
     private String email;
