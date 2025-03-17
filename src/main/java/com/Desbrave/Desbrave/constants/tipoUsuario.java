@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.constants;
 
 public enum TipoUsuario{
-    ADMIN,
+    ADMIN,   
     USUARIO_COMUM;
 
 }
