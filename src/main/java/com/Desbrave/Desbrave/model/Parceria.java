@@ -1,4 +1,5 @@
 package com.Desbrave.Desbrave.model;
+
 import com.Desbrave.Desbrave.constants.TipoParceria;
 import com.Desbrave.Desbrave.constants.StatusParceria;
 import jakarta.persistence.Column;
@@ -12,6 +13,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -37,5 +39,3 @@ public class Parceria {
     @Column(nullable = false)
     private StatusParceria status;
 }
-
-
