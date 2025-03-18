@@ -5,4 +5,6 @@ public enum Titulo {
     DUVIDA,
     DISCUSSAO,
     SUGESTAO;
+    
 }
+      
