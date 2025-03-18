@@ -20,16 +20,13 @@ public class SecurityConfig {
         return http
         .csrf().disable()
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/cursos", "/qrcodes"
-        , "/cupom" , "/parcerias").hasRole("ADMIN")
-        .anyRequest().authenticated())
-
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/cursos", "/qrcodes", "/cupom", "/parcerias").hasRole("ADMIN")
             .requestMatchers(HttpMethod.PUT, "/cursos", "/qrcodes", "/cupom", "/parcerias").hasRole("ADMIN")
             .requestMatchers(HttpMethod.DELETE, "/cursos", "/qrcodes", "/cupom", "/parcerias").hasRole("ADMIN")
             .requestMatchers(HttpMethod.GET, "/qrcodes").hasRole("ADMIN")
-            .anyRequest().authenticated())
+            .anyRequest().authenticated()
+            )
         .build();
     }
   

@@ -15,5 +15,5 @@ public enum TipoUsuario{
     public String getTipoUsuario(){
         return tipoUsuario;
     }
-    
+      
 }
