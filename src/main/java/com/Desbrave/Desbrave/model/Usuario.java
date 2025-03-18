@@ -54,6 +54,13 @@ public class Usuario implements UserDetails {
     protected void onCreate(){
         this.dataCriacao = LocalDate.now();
     }
+
+    public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
+        this.email = email;
+        this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
          if(this.tipoUsuario == TipoUsuario.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER")); 
