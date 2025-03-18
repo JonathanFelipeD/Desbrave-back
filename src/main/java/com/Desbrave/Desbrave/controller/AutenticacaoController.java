@@ -8,6 +8,7 @@ import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,25 +28,28 @@ public class AutenticacaoController {
     @Autowired
     private AuthenticationManager authenticationManager;
     
-    @SuppressWarnings("rawtypes")
+    
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Validated LoginRequest loginRequest) {
-       var UsuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
+    public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
+      try { var UsuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
        @SuppressWarnings("unused")
-       var authentication = authenticationManager.authenticate(UsuarioSenha);
+       var auth = authenticationManager.authenticate(UsuarioSenha);
          return ResponseEntity.ok().build();
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+    }
     }
 
-    @SuppressWarnings("rawtypes")
+    
     @PostMapping("/cadastrar")
-    public ResponseEntity cadastrar(@RequestBody @Validated CadastrarRequest cadastrarRequest) {
+    public ResponseEntity<?> cadastrar(@RequestBody @Validated CadastrarRequest cadastrarRequest) {
         if(this.usuarioRepository.findByEmail(cadastrarRequest.getEmail()) != null){
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Email já cadastrado");
         }
         String encryptedPassword = new BCryptPasswordEncoder().encode(cadastrarRequest.getSenha());
         Usuario novoUsuario = new Usuario(cadastrarRequest.getEmail(), encryptedPassword, cadastrarRequest.getTipoUsuario());
         this.usuarioRepository.save(novoUsuario);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Usuário cadastrado com sucesso");
     }
     
 }

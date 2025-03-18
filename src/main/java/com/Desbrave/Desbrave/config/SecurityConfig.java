@@ -1,6 +1,7 @@
 package com.Desbrave.Desbrave.config;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,10 +14,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.Desbrave.Desbrave.service.UsuarioDetailsService;
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @SuppressWarnings("unused")
+    @Autowired
+    private UsuarioDetailsService usuarioDetailsService;
 
     @SuppressWarnings({ "removal" })
     @Bean
@@ -36,8 +43,9 @@ public class SecurityConfig {
         .build();
     }
   
+    
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 

@@ -41,7 +41,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, length = 40)
     private String senha;
     
-    @Column(name = "data_Nascimento",nullable = false)
+    @Column(name = "data_Nascimento",nullable = true)
     private Date dataNascimento;
     @Column(nullable = false)
     private TipoUsuario tipoUsuario; 
