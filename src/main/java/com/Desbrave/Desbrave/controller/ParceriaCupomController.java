@@ -16,7 +16,7 @@ import com.Desbrave.Desbrave.model.ParceriaCupom;
 import com.Desbrave.Desbrave.repository.ParceriaCupomRepository;
 
 @RestController
-@RequestMapping(value = "/ParceriaCupom")
+@RequestMapping(value = "/parceriaCupom")
 public class ParceriaCupomController {
 
     @PostMapping
