@@ -14,7 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.Desbrave.Desbrave.service.UsuarioDetailsService;
+import com.Desbrave.Desbrave.service.AutenticacaoService;
+
 
 
 @Configuration
@@ -23,9 +24,10 @@ public class SecurityConfig {
 
     @SuppressWarnings("unused")
     @Autowired
-    private UsuarioDetailsService usuarioDetailsService;
+    private AutenticacaoService autenticacaoService;
 
-    @SuppressWarnings({ "removal" })
+    
+    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
