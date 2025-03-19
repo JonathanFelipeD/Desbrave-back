@@ -22,29 +22,29 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "Postagem")
 public class Postagem {
-    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Lob
-    @Column(nullable = false)   
+    @Column(nullable = false)
     private String counteudo;
 
-    @Column(nullable= false)
+    @Column(nullable = false)
     private LocalDate dataPostagem;
 
-
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable =  false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "forum_id")
+    private Forum forum;
 
-     @PrePersist
-    protected void onCreate(){
+    @PrePersist
+    protected void onCreate() {
         this.dataPostagem = LocalDate.now();
     }
-
 
 }
