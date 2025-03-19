@@ -4,9 +4,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.LoginRequest;
+import com.Desbrave.Desbrave.DTO.LoginResponseDTO;
 import com.Desbrave.Desbrave.constants.TipoUsuario;
 import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
+import com.Desbrave.Desbrave.security.TokenService;
 
 import java.time.LocalDate;
 
@@ -30,15 +32,23 @@ public class AutenticacaoController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
     
     
     @SuppressWarnings("rawtypes")
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated LoginRequest loginRequest) {
       try { var UsuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
-       @SuppressWarnings("unused")
+       
        var auth = authenticationManager.authenticate(UsuarioSenha);
-         return ResponseEntity.ok().build();
+
+       var token = tokenService.gerarToken((Usuario)auth.getPrincipal());
+
+         return ResponseEntity.ok(new LoginResponseDTO(token));
+
+
     } catch (Exception e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     }
