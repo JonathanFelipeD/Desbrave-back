@@ -37,5 +37,10 @@ public class ParceriaCupom {
     @JoinColumn(name="Cupom_id")
     private Cupom cupom;
 
+    
+
+    @ManyToOne
+    @JoinColumn(name = "Parceria_id")
+    private Parceria parceria;
 
 }

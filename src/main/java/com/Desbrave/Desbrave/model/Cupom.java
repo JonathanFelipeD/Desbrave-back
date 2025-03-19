@@ -1,6 +1,8 @@
 package com.Desbrave.Desbrave.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.Desbrave.Desbrave.constants.TipoCupom;
 
@@ -10,6 +12,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -42,6 +46,14 @@ public class Cupom {
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
+
+     @ManyToMany
+    @JoinTable(
+        name = "cupom_curso",
+        joinColumns = @JoinColumn(name = "cupom_id"),
+        inverseJoinColumns = @JoinColumn(name = "curso_id")
+    )
+    private List<Cursos> cursos = new ArrayList<>(); 
 
 
 

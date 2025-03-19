@@ -1,6 +1,9 @@
 package com.Desbrave.Desbrave.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.Desbrave.Desbrave.constants.Titulo;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -8,6 +11,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +38,9 @@ public class Forum {
 
     @Column(name = "usuario_idusuario", nullable = false)
     private Integer usuarioId;
+
+      @OneToMany(mappedBy = "forum")
+      private List<Postagem> postagens = new ArrayList<>();
 
 
 }
