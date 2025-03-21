@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "usuarioQrCode")
-public class  UsuarioQrCode {
+public class UsuarioQrCode {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
