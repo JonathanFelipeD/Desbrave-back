@@ -16,11 +16,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import com.Desbrave.Desbrave.constants.TipoUsuario;
 
 
 
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
 @Table(name = "usuario")
 public class Usuario implements UserDetails {
@@ -48,87 +58,7 @@ public class Usuario implements UserDetails {
     }
      
 
-    public Usuario(Long id, String nomeCompleto, String email, String senha, LocalDate dataNascimento,
-            TipoUsuario tipoUsuario, LocalDate dataCriacao, long pontuacaoTotal) {
-        this.id = id;
-        this.nomeCompleto = nomeCompleto;
-        this.email = email;
-        this.senha = senha;
-        this.dataNascimento = dataNascimento;
-        this.tipoUsuario = tipoUsuario;
-        this.dataCriacao = dataCriacao;
-        this.pontuacaoTotal = pontuacaoTotal;
-    }
 
-    public Usuario() {
-    }
-
-
-    
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNomeCompleto(String nomeCompleto) {
-        this.nomeCompleto = nomeCompleto;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public void setDataNascimento(LocalDate dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public void setTipoUsuario(TipoUsuario tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
-    }
-
-    public void setDataCriacao(LocalDate dataCriacao) {
-        this.dataCriacao = dataCriacao;
-    }
-
-    public void setPontuacaoTotal(long pontuacaoTotal) {
-        this.pontuacaoTotal = pontuacaoTotal;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNomeCompleto() {
-        return nomeCompleto;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public LocalDate getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public TipoUsuario getTipoUsuario() {
-        return tipoUsuario;
-    }
-
-    public LocalDate getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public long getPontuacaoTotal() {
-        return pontuacaoTotal;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

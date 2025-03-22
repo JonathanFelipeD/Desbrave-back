@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.config;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,18 +18,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.Desbrave.Desbrave.security.SecurityFilter;
 import com.Desbrave.Desbrave.service.AutenticacaoService;
 
+import lombok.RequiredArgsConstructor;
+
 
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @SuppressWarnings("unused")
-    @Autowired
-    private AutenticacaoService autenticacaoService;
+    private final AutenticacaoService autenticacaoService;
 
-    @Autowired
-    private SecurityFilter securityFilter;
+    
+    private final SecurityFilter securityFilter;
 
     
     @SuppressWarnings("removal")

@@ -2,7 +2,6 @@ package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,12 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Desbrave.Desbrave.model.QrCode;
 import com.Desbrave.Desbrave.repository.QrCodeRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/qrcodes")
+@RequiredArgsConstructor
 public class QrCodeController {
 
-    @Autowired
-    private QrCodeRepository qrCodeRepository;
+   
+    private final QrCodeRepository qrCodeRepository;
 
     //criar um qrcode
     @PostMapping

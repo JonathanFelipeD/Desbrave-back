@@ -12,20 +12,19 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI customOpenAPI(){
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
-        .info(new Info()
-                    .title("Desbrave API")
-                    .version("1.0")
-                    .description("Documentação da API do projeto Desbrave"))
-            . addSecurityItem(new SecurityRequirement().addList("x-auth"))
+            .info(new Info()
+                .title("Desbrave API")
+                .version("1.0")
+                .description("Documentação da API do projeto Desbrave"))
+            .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
             .components(new io.swagger.v3.oas.models.Components()
-            .addSecuritySchemes("x-auth", new SecurityScheme()
-            .name("x-auth")
-            .type(SecurityScheme.Type.APIKEY)
-            .in(SecurityScheme.In.HEADER))
-
-            );
+                .addSecuritySchemes("Bearer Authentication", new SecurityScheme()
+                    .name("Authorization")
+                    .type(SecurityScheme.Type.APIKEY)
+                    .in(SecurityScheme.In.HEADER)
+                    .description("Insira 'Bearer' [espaço] e, em seguida, seu token JWT.")));
     }
 
 }

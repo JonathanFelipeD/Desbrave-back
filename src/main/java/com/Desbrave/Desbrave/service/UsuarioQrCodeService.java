@@ -2,7 +2,7 @@ package com.Desbrave.Desbrave.service;
 
 import java.time.LocalDateTime;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.Desbrave.Desbrave.model.QrCode;
@@ -12,17 +12,20 @@ import com.Desbrave.Desbrave.repository.QrCodeRepository;
 import com.Desbrave.Desbrave.repository.UsuarioQrCodeRepository;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UsuarioQrCodeService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private QrCodeRepository qrCodeRepository;
+    
+    private final QrCodeRepository qrCodeRepository;
 
-    @Autowired
-    private UsuarioQrCodeRepository usuarioQrCodeRepository;
+    
+    private final UsuarioQrCodeRepository usuarioQrCodeRepository;
 
     public UsuarioQrCode associarUsuarioQrCode(Long usuarioId, Long qrCodeId) {
         // Buscar o usuário e o QR code pelos seus IDs

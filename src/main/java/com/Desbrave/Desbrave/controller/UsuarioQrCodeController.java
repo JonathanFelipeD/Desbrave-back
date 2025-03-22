@@ -2,7 +2,7 @@ package com.Desbrave.Desbrave.controller;
 import java.util.List;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,16 +16,19 @@ import com.Desbrave.Desbrave.model.UsuarioQrCode;
 import com.Desbrave.Desbrave.repository.UsuarioQrCodeRepository;
 import com.Desbrave.Desbrave.service.UsuarioQrCodeService;
 
+import lombok.RequiredArgsConstructor;
+
 
 @RestController
 @RequestMapping("/usuario-qrcode")
+@RequiredArgsConstructor
 public class UsuarioQrCodeController {
 
-    @Autowired
-    private UsuarioQrCodeService usuarioQrCodeService;
+    
+    private final UsuarioQrCodeService usuarioQrCodeService;
 
-    @Autowired
-    private UsuarioQrCodeRepository usuarioQrCodeRepository;
+   
+    private final UsuarioQrCodeRepository usuarioQrCodeRepository;
 
     //associar um usuario a um qrcode
     @PostMapping

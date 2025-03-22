@@ -1,18 +1,22 @@
 package com.Desbrave.Desbrave.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import com.Desbrave.Desbrave.repository.CursosRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import com.Desbrave.Desbrave.model.Cursos;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CursosService {
 
-    @Autowired
-    private CursosRepository cursosRepository;
+    
+    private final CursosRepository cursosRepository;
 
     public List<Cursos> listarCursos() {
         return cursosRepository.findAll();

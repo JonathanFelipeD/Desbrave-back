@@ -1,14 +1,17 @@
 package com.Desbrave.Desbrave.service;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Desbrave.Desbrave.model.Parceria;
 import com.Desbrave.Desbrave.repository.ParceriaRepository;
+
+import lombok.RequiredArgsConstructor;
 @Service
+@RequiredArgsConstructor
 public class ParceriaService {
-    @Autowired
-    private ParceriaRepository parceriaRepository;
+    
+
+    private final ParceriaRepository parceriaRepository;
     public List<Parceria> listarTodas() {
         return parceriaRepository.findAll();
     }

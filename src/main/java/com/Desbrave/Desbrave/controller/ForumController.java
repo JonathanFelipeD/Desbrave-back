@@ -2,7 +2,7 @@ package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import com.Desbrave.Desbrave.model.Forum;
 import com.Desbrave.Desbrave.repository.ForumRepository;
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping ("/forum")
+@RequiredArgsConstructor
 public class ForumController {
 
 
-    @Autowired
-    private ForumRepository forumRepository;
+    
+    private final ForumRepository forumRepository;
 
     @GetMapping
     public List<Forum> getAllForuns(){

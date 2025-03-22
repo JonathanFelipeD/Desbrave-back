@@ -1,9 +1,12 @@
 package com.Desbrave.Desbrave.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.Desbrave.Desbrave.service.CursosService;
+
+import lombok.RequiredArgsConstructor;
+
 import com.Desbrave.Desbrave.model.Cursos;
 
 import java.util.List;
@@ -11,10 +14,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cursos")
+@RequiredArgsConstructor
 public class CursosController {
 
-    @Autowired
-    private CursosService cursosService;
+    
+    private final CursosService cursosService;
 
    
     @GetMapping

@@ -10,9 +10,11 @@ import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
 import com.Desbrave.Desbrave.security.TokenService;
 
+import lombok.RequiredArgsConstructor;
+
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,16 +27,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @RequestMapping("/autenticacao")
+@RequiredArgsConstructor
 public class AutenticacaoController {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private TokenService tokenService;
+    
+    private final TokenService tokenService;
     
     
     @SuppressWarnings("rawtypes")
