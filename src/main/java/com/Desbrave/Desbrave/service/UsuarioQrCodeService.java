@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.service;
 
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -39,5 +39,17 @@ public class UsuarioQrCodeService {
         usuarioQrCode.setDataEscaneamento(LocalDateTime.now());
 
         return usuarioQrCodeRepository.save(usuarioQrCode);
+    }
+
+    public List<UsuarioQrCode> listarAssociacoes() {
+        return usuarioQrCodeRepository.findAll();
+    }
+
+    public List<UsuarioQrCode> buscarAssociacoesPorUsuarioId(Long usuarioId) {
+        return usuarioQrCodeRepository.findByUsuarioId(usuarioId);
+    }
+
+    public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(Long qrCodeId) {
+        return usuarioQrCodeRepository.findByQrCodeId(qrCodeId);
     }
 }

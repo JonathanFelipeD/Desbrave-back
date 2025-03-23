@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.UsuarioQrCodeRequest;
 import com.Desbrave.Desbrave.model.UsuarioQrCode;
-import com.Desbrave.Desbrave.repository.UsuarioQrCodeRepository;
 import com.Desbrave.Desbrave.service.UsuarioQrCodeService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,33 +29,31 @@ public class UsuarioQrCodeController {
     
     private final UsuarioQrCodeService usuarioQrCodeService;
 
-   
-    private final UsuarioQrCodeRepository usuarioQrCodeRepository;
-
-    //associar um usuario a um qrcode
+    // Associar um usuário a um QR Code
     @PostMapping
     @Operation(summary = "Associar Usuario a QrCode")
-    public UsuarioQrCode associarUsuarioQrCode(@RequestBody UsuarioQrCodeRequest request){
+    public UsuarioQrCode associarUsuarioQrCode(@RequestBody UsuarioQrCodeRequest request) {
         return usuarioQrCodeService.associarUsuarioQrCode(request.getUsuarioId(), request.getQrCodeId());
     }
 
-    //listar todas as acossiacoes
+    // Listar todas as associações
     @GetMapping
     @Operation(summary = "Listar Associacoes")
-    public List<UsuarioQrCode>listarAssociacoes(){
-        return usuarioQrCodeRepository.findAll();
+    public List<UsuarioQrCode> listarAssociacoes() {
+        return usuarioQrCodeService.listarAssociacoes();
     }
 
-    //buscar associacoes por id de usuario
+    // Buscar associações por id de usuário
     @GetMapping("/usuario/{usuarioId}")
     @Operation(summary = "Buscar Associacoes por UsuarioId")
     public List<UsuarioQrCode> buscarAssociacoesPorUsuarioId(@PathVariable Long usuarioId) {
-        return usuarioQrCodeRepository.findByUsuarioId(usuarioId); // Usando o método personalizado do repository
+        return usuarioQrCodeService.buscarAssociacoesPorUsuarioId(usuarioId);
     }
 
+    // Buscar associações por id de QR Code
     @GetMapping("/qrcode/{qrCodeId}")
     @Operation(summary = "Buscar Associacoes por QrCodeId")
-    public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(@PathVariable Long qrCodeId){
-        return usuarioQrCodeRepository.findByQrCodeId(qrCodeId);
+    public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(@PathVariable Long qrCodeId) {
+        return usuarioQrCodeService.buscarAssociacoesPorQrCodeId(qrCodeId);
     }
 }
