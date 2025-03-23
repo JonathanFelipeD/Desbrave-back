@@ -2,17 +2,21 @@ package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.model.Forum;
 import com.Desbrave.Desbrave.repository.ForumRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ForumService {
 
-    @Autowired
-    private ForumRepository forumRepository;
+   
+    private final ForumRepository forumRepository;
 
     public List<Forum> listarTodos() {
         return forumRepository.findAll();
