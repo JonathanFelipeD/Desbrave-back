@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Desbrave.Desbrave.model.QrCode;
 import com.Desbrave.Desbrave.repository.QrCodeRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/qrcodes")
 @RequiredArgsConstructor
+@Tag(name = "QrCode", description = "endpoints para gerenciar qrcodes")
 public class QrCodeController {
 
    
@@ -28,18 +31,21 @@ public class QrCodeController {
 
     //criar um qrcode
     @PostMapping
+    @Operation(summary = "Cadastrar QrCode")
     public QrCode criarQrCode(@RequestBody QrCode qrCode){
         return qrCodeRepository.save(qrCode);
     }
 
     //listar os qrcode
     @GetMapping
+    @Operation(summary = "Listar QrCodes")
     public List<QrCode> listaQrCodes(){
         return qrCodeRepository.findAll();
     }
 
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar QrCode por id")
     public ResponseEntity<QrCode> buscarQrCodePorId(@PathVariable Long id){
         return qrCodeRepository.findById(id)
         .map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
@@ -48,6 +54,7 @@ public class QrCodeController {
 
     //atualiza um qrCode pelo id
     @PutMapping("/{id}")
+    @Operation(summary = "Atualizar QrCode por id")
     public ResponseEntity<QrCode> atualizarQrCode(@PathVariable long id, @RequestBody QrCode qrCodeAtualizado){
         return qrCodeRepository.findById(id).map(qrCode -> {
             qrCode.setCodigo(qrCodeAtualizado.getCodigo());
@@ -58,6 +65,7 @@ public class QrCodeController {
 
     //deletar qrCode por id
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deletar QrCode por id")
     public ResponseEntity<Object> deletarQrCode(@PathVariable long id) {
         return qrCodeRepository.findById(id)
                 .map(qrCode -> {
