@@ -57,8 +57,13 @@ public class SecurityConfig {
             .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
             .anyRequest().authenticated()
             )
-        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
+                .oauth2Login(oauth -> oauth
+                        .loginPage("/cs")
+                        .defaultSuccessUrl("/home")
+                        .permitAll()
+                )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
     
   
