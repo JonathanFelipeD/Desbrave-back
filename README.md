@@ -1,4 +1,5 @@
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 erDiagram
     usuario {
         INT idusuario
