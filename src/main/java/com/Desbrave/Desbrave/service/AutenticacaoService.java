@@ -3,6 +3,7 @@ package com.Desbrave.Desbrave.service;
 
 import java.time.LocalDate;
 
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,9 +26,15 @@ public class AutenticacaoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return usuarioRepository.findByEmail(username);
-    }
+        Usuario usuario = usuarioRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
+        return User.builder()
+                .username(usuario.getEmail())
+                .password(usuario.getSenha())
+                .roles(usuario.getTipoUsuario().name()) // Converte automaticamente para "ROLE_..."
+                .build();
+    }
     
     public void cadastrar(CadastrarRequest cadastrarRequest) {
         if (usuarioRepository.findByEmail(cadastrarRequest.getEmail()) != null) {
