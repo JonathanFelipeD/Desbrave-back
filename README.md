@@ -86,10 +86,9 @@ erDiagram
     usuario_qrcode ||--o{ QRcode : pertence
     usuario ||--o{ usuario_cupom : resgata
     usuario_cupom ||--o{ cupom : pertence
-    cupom ||--o{ parceria_cupom : é_oferecido_por
+    cupom ||--o{ parceria_cupom : oferecido_por
     parceria_cupom ||--o{ parceria : pertence
     usuario ||--o{ historico_resgate : registra
-    historico_resgate ||--o{ cupom : contém
+    historico_resgate ||--o{ cupom : contem
     historico_resgate ||--o{ parceria : refere_se_a
-
 
