@@ -56,6 +56,9 @@ public class Usuario implements UserDetails {
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
     }
+    public String getRoleAsAuthority() {
+        return "ROLE_" + this.tipoUsuario; // ou perfil/role
+    }
      
 
 
