@@ -49,4 +49,10 @@ public class UsuarioCupom {
         this.dataResgate = LocalDate.now();
     }
 
+
+    public UsuarioCupom adicionarCupomAoUsuario(Long usuarioId, UsuarioCupom cupom2) {
+       
+        throw new UnsupportedOperationException("Unimplemented method 'adicionarCupomAoUsuario'");
+    }
+
 }

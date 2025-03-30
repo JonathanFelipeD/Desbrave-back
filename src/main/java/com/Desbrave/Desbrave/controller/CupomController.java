@@ -18,6 +18,7 @@ import com.Desbrave.Desbrave.model.Cupom;
 import com.Desbrave.Desbrave.repository.CupomRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -41,12 +42,18 @@ public class CupomController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar um cupom", description = "Deleta um cupom pelo id")
+    @ApiResponse(responseCode = "200", description = "Cupom deletado com sucesso")
+    @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
+    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     public void deletarCupom(@PathVariable("id") Long idCupom){
         cupomRepository.deleteById(idCupom);    
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar um cupom", description = "Atualiza um cupom pelo id")
+    @ApiResponse(responseCode = "200", description = "Cupom atualizado com sucesso")
+    @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
+    @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     public Cupom atualizarCupomPeloId(@PathVariable("id") Long idCupom, @RequestBody Cupom cupom){
         Optional<Cupom> cupomExistente = cupomRepository.findById(idCupom);
         if(cupomExistente.isPresent()){

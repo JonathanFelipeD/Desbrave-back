@@ -50,24 +50,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService) throws Exception {
         return http
-                .csrf().disable()
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/autenticacao/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/autenticacao/cadastrar").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios", "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/usuarios", "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-                        .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint()
-                        .userService(oauth2UserService)
-                )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+        .csrf().disable()
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(authorize -> authorize
+            .requestMatchers(HttpMethod.POST, "/autenticacao/login").permitAll()
+            .requestMatchers(HttpMethod.POST, "/autenticacao/cadastrar").permitAll()
+            .requestMatchers(HttpMethod.POST, "/api/usuarios", "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.PUT, "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.DELETE, "/api/usuarios" , "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
+            .requestMatchers(HttpMethod.GET,   "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
+            .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
+            .requestMatchers("/api/usuarios/recuperar-senha", "/api/usuarios/redefinir-senha").permitAll()
+            .anyRequest().authenticated()
+            )
+        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+        .build();
     }
     
   
