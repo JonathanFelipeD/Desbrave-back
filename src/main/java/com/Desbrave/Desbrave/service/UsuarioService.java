@@ -1,9 +1,11 @@
 package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.model.Usuario;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,10 +13,11 @@ import java.util.Optional;
 
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+   
+    private final UsuarioRepository usuarioRepository;
     
     public List<Usuario> listarTodos(){
         return usuarioRepository.findAll();

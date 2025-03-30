@@ -1,8 +1,8 @@
 package com.Desbrave.Desbrave.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Desbrave.Desbrave.model.QrCode;
@@ -12,17 +12,20 @@ import com.Desbrave.Desbrave.repository.QrCodeRepository;
 import com.Desbrave.Desbrave.repository.UsuarioQrCodeRepository;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UsuarioQrCodeService {
 
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    
+    private final UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private QrCodeRepository qrCodeRepository;
+    
+    private final QrCodeRepository qrCodeRepository;
 
-    @Autowired
-    private UsuarioQrCodeRepository usuarioQrCodeRepository;
+    
+    private final UsuarioQrCodeRepository usuarioQrCodeRepository;
 
     public UsuarioQrCode associarUsuarioQrCode(Long usuarioId, Long qrCodeId) {
         // Buscar o usuário e o QR code pelos seus IDs
@@ -36,5 +39,17 @@ public class UsuarioQrCodeService {
         usuarioQrCode.setDataEscaneamento(LocalDateTime.now());
 
         return usuarioQrCodeRepository.save(usuarioQrCode);
+    }
+
+    public List<UsuarioQrCode> listarAssociacoes() {
+        return usuarioQrCodeRepository.findAll();
+    }
+
+    public List<UsuarioQrCode> buscarAssociacoesPorUsuarioId(Long usuarioId) {
+        return usuarioQrCodeRepository.findByUsuarioId(usuarioId);
+    }
+
+    public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(Long qrCodeId) {
+        return usuarioQrCodeRepository.findByQrCodeId(qrCodeId);
     }
 }
