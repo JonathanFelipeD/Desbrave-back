@@ -43,13 +43,13 @@ public class Usuario implements UserDetails {
     private String nomeCompleto;
     private String email;
     private String senha;
-     private LocalDate dataNascimento;
+    private LocalDate dataNascimento;
     private TipoUsuario tipoUsuario; 
     private LocalDate dataCriacao;
     private long pontuacaoTotal;
 
-    
-   
+    private String resetToken;
+    private LocalDate dataExpiracaoToken;
 
     public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
         this.email = email;
@@ -93,6 +93,8 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 
     
 
