@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AutenticacaoService implements UserDetailsService {
 
-    
     private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -32,20 +32,19 @@ public class AutenticacaoService implements UserDetailsService {
         return User.builder()
                 .username(usuario.getEmail())
                 .password(usuario.getSenha())
-                .roles(usuario.getTipoUsuario().name()) // Converte automaticamente para "ROLE_..."
+                .roles(usuario.getTipoUsuario().name())
                 .build();
     }
-    
+
     public void cadastrar(CadastrarRequest cadastrarRequest) {
-        if (usuarioRepository.findByEmail(cadastrarRequest.getEmail()) != null) {
+
+        if (usuarioRepository.findByEmail(cadastrarRequest.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email já cadastrado");
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(cadastrarRequest.getSenha());
-
         Usuario novoUsuario = new Usuario();
         novoUsuario.setEmail(cadastrarRequest.getEmail());
-        novoUsuario.setSenha(encryptedPassword);
+        novoUsuario.setSenha(passwordEncoder.encode(cadastrarRequest.getSenha()));
         novoUsuario.setTipoUsuario(TipoUsuario.valueOf(cadastrarRequest.getTipoUsuario().toUpperCase()));
         novoUsuario.setDataNascimento(cadastrarRequest.getDataNascimento());
         novoUsuario.setDataCriacao(LocalDate.now());
