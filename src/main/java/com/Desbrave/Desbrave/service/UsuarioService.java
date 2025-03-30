@@ -32,7 +32,7 @@ public class UsuarioService {
     }
 
     public Usuario buscarPorEmail(String email) {
-        return usuarioRepository.findByEmail(email);
+        return usuarioRepository.findByEmail(email).orElse(null);
     }
 
     public Usuario criar(Usuario usuario) {
@@ -82,7 +82,7 @@ public class UsuarioService {
             return false;
         }
         
-        Usuario usuario = usuarioRepository.findByEmail(tokenRecuperacao.getEmail());
+        Usuario usuario = usuarioRepository.findByEmail(tokenRecuperacao.getEmail()).orElse(null);
         if (usuario != null) {
             usuario.setSenha(passwordEncoder.encode(novaSenha));
             usuarioRepository.save(usuario);

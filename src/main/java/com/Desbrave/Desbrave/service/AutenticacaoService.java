@@ -34,9 +34,8 @@ public class AutenticacaoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
-
-        return User.builder()
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + username));
+                return User.builder()
                 .username(usuario.getEmail())
                 .password(usuario.getSenha())
                 .roles(usuario.getTipoUsuario().name()) // Converte automaticamente para "ROLE_..."
@@ -62,7 +61,8 @@ public class AutenticacaoService implements UserDetailsService {
     }
 
     public void recuperarSenha(String email) {
-        Usuario usuario = usuarioRepository.findByEmail(email);
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com esse e-mail."));
         if (usuario == null) {
             throw new IllegalArgumentException("Usuário não encontrado com esse e-mail.");
         }
@@ -86,7 +86,8 @@ public class AutenticacaoService implements UserDetailsService {
         if (tokenRecuperacao.getDataExpiracao().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Token expirado.");
         }
-        Usuario usuario = usuarioRepository.findByEmail(tokenRecuperacao.getEmail());
+        Usuario usuario = usuarioRepository.findByEmail(tokenRecuperacao.getEmail())
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com esse e-mail."));
         usuario.setSenha(new BCryptPasswordEncoder().encode(novaSenha));
         usuarioRepository.save(usuario);
         tokenRecuperacaoRepository.delete(tokenRecuperacao);
