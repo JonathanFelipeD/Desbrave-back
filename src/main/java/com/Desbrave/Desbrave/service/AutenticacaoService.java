@@ -1,6 +1,5 @@
 package com.Desbrave.Desbrave.service;
 
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,18 +26,15 @@ import lombok.RequiredArgsConstructor;
 public class AutenticacaoService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
-<<<<<<< HEAD
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-=======
     private final TokenRecuperacaoRepository tokenRecuperacaoRepository;
     private final EmailServiceImpl emailServiceImpl;
->>>>>>> bf771c627c87f7e98373a3c21a4a7f2d9d142f6e
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + username));
-                return User.builder()
+        return User.builder()
                 .username(usuario.getEmail())
                 .password(usuario.getSenha())
                 .roles(usuario.getTipoUsuario().name())
@@ -61,9 +57,6 @@ public class AutenticacaoService implements UserDetailsService {
 
         usuarioRepository.save(novoUsuario);
     }
-<<<<<<< HEAD
-}
-=======
 
     public void recuperarSenha(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
@@ -76,12 +69,11 @@ public class AutenticacaoService implements UserDetailsService {
         TokenRecuperacao tokenRecuperacao = new TokenRecuperacao();
         tokenRecuperacao.setEmail(email);
         tokenRecuperacao.setToken(token);
-        tokenRecuperacao.setDataExpiracao(LocalDateTime.now().plusHours(1)); 
+        tokenRecuperacao.setDataExpiracao(LocalDateTime.now().plusHours(1));
         tokenRecuperacaoRepository.save(tokenRecuperacao);
-       
+
         emailServiceImpl.enviarEmail(email, "Seu token de recuperação é: " + token);
     }
-
 
     public void redefinirSenha(String token, String novaSenha) {
         TokenRecuperacao tokenRecuperacao = tokenRecuperacaoRepository.findByToken(token);
@@ -97,10 +89,8 @@ public class AutenticacaoService implements UserDetailsService {
         usuarioRepository.save(usuario);
         tokenRecuperacaoRepository.delete(tokenRecuperacao);
     }
+
     public void enviarTokenRecuperacao(String email) {
-        
         throw new UnsupportedOperationException("Unimplemented method 'enviarTokenRecuperacao'");
     }
 }
-
->>>>>>> bf771c627c87f7e98373a3c21a4a7f2d9d142f6e
