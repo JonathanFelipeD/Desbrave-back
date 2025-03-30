@@ -55,6 +55,7 @@ public class SecurityConfig {
             .requestMatchers(HttpMethod.DELETE, "/api/usuarios" , "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
             .requestMatchers(HttpMethod.GET,   "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
             .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
+            .requestMatchers("/api/usuarios/recuperar-senha", "/api/usuarios/redefinir-senha").permitAll()
             .anyRequest().authenticated()
             )
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
