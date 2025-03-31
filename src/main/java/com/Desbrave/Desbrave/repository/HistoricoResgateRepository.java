@@ -12,4 +12,3 @@ public interface HistoricoResgateRepository extends JpaRepository<HistoricoResga
 
 }
 
-//aqui vai ficar a lógica de buscar o historico de resgate por usuario

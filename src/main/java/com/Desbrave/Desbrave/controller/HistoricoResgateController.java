@@ -31,6 +31,4 @@ public class HistoricoResgateController {
         return historicoResgateRepository.findByUsuarioId(usuarioId);
     }
 
-    //aquivai ficar a lógica de buscar o historico de resgate por usuario com o id do usuario
-    // e vai listar o historico de resgate
 }

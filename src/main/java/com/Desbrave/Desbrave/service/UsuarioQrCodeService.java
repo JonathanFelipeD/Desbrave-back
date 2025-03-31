@@ -28,11 +28,11 @@ public class UsuarioQrCodeService {
     private final UsuarioQrCodeRepository usuarioQrCodeRepository;
 
     public UsuarioQrCode associarUsuarioQrCode(Long usuarioId, Long qrCodeId) {
-        // Buscar o usuário e o QR code pelos seus IDs
+        
         Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         QrCode qrCode = qrCodeRepository.findById(qrCodeId).orElseThrow(() -> new RuntimeException("QR Code não encontrado"));
 
-        // Criar a associação
+       
         UsuarioQrCode usuarioQrCode = new UsuarioQrCode();
         usuarioQrCode.setUsuario(usuario);
         usuarioQrCode.setQrCode(qrCode);

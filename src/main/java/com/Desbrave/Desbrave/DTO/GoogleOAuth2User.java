@@ -14,7 +14,7 @@ public class GoogleOAuth2User {
         this.picture = (String) attributes.get("picture");
     }
 
-    // Getters
+    
     public String getEmail() { return email; }
     public String getName() { return name; }
     public String getPicture() { return picture; }

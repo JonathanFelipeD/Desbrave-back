@@ -29,28 +29,28 @@ public class UsuarioQrCodeController {
     
     private final UsuarioQrCodeService usuarioQrCodeService;
 
-    // Associar um usuário a um QR Code
+    
     @PostMapping
     @Operation(summary = "Associar Usuario a QrCode")
     public UsuarioQrCode associarUsuarioQrCode(@RequestBody UsuarioQrCodeRequest request) {
         return usuarioQrCodeService.associarUsuarioQrCode(request.getUsuarioId(), request.getQrCodeId());
     }
 
-    // Listar todas as associações
+    
     @GetMapping
     @Operation(summary = "Listar Associacoes")
     public List<UsuarioQrCode> listarAssociacoes() {
         return usuarioQrCodeService.listarAssociacoes();
     }
 
-    // Buscar associações por id de usuário
+    
     @GetMapping("/usuario/{usuarioId}")
     @Operation(summary = "Buscar Associacoes por UsuarioId")
     public List<UsuarioQrCode> buscarAssociacoesPorUsuarioId(@PathVariable Long usuarioId) {
         return usuarioQrCodeService.buscarAssociacoesPorUsuarioId(usuarioId);
     }
 
-    // Buscar associações por id de QR Code
+   
     @GetMapping("/qrcode/{qrCodeId}")
     @Operation(summary = "Buscar Associacoes por QrCodeId")
     public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(@PathVariable Long qrCodeId) {

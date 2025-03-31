@@ -17,7 +17,7 @@ public class UsuarioCupomService {
     private final UsuarioCupomRepository usuarioCupomRepository;
 private final UsuarioRepository usuarioRepository;
 
-    //a logica vai adicionar um cupom a um usuario
+   
     public UsuarioCupom adicionarCupomAoUsuario(Long usuarioId, UsuarioCupom cupom){
         Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
 

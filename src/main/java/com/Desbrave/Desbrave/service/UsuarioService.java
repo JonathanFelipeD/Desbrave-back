@@ -78,10 +78,10 @@ public class UsuarioService {
     
     @Transactional
     public void criarTokenRecuperacao(String email) {
-        // Remove tokens existentes para este email
+        
         tokenRecuperacaoRepository.deleteByEmail(email);
         
-        // Cria novo token
+        
         TokenRecuperacao novoToken = new TokenRecuperacao();
         novoToken.setEmail(email);
         novoToken.setToken(UUID.randomUUID().toString());

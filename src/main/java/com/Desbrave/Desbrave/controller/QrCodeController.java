@@ -29,7 +29,7 @@ public class QrCodeController {
   
     private final QrCodeService qrCodeService;
 
-    // Criar um QrCode
+    
     @PostMapping
     @Operation(summary = "Cadastrar QrCode")
     public ResponseEntity<QrCode> criarQrCode(@RequestBody QrCode qrCode) {
@@ -37,14 +37,14 @@ public class QrCodeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(novoQrCode);
     }
 
-    // Listar os QrCodes
+    
     @GetMapping
     @Operation(summary = "Listar QrCodes")
     public List<QrCode> listaQrCodes() {
         return qrCodeService.listarQrCodes();
     }
 
-    // Buscar QrCode por id
+    
     @GetMapping("/{id}")
     @Operation(summary = "Buscar QrCode por id")
     public ResponseEntity<QrCode> buscarQrCodePorId(@PathVariable Long id) {
@@ -53,7 +53,7 @@ public class QrCodeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Atualizar um QrCode pelo id
+    
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar QrCode por id")
     public ResponseEntity<QrCode> atualizarQrCode(@PathVariable long id, @RequestBody QrCode qrCodeAtualizado) {
@@ -62,7 +62,6 @@ public class QrCodeController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Deletar QrCode por id
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar QrCode por id")
     public ResponseEntity<Object> deletarQrCode(@PathVariable long id) {
