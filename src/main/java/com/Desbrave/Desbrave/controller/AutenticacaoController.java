@@ -2,14 +2,12 @@ package com.Desbrave.Desbrave.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.LoginRequest;
 import com.Desbrave.Desbrave.DTO.LoginResponseDTO;
 import com.Desbrave.Desbrave.config.SecurityConfig;
 import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.security.TokenService;
 import com.Desbrave.Desbrave.service.AutenticacaoService;
-import com.Desbrave.Desbrave.service.LogoutService;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -41,7 +39,7 @@ public class AutenticacaoController {
 
     private final TokenService tokenService;
 
-    private final LogoutService logoutService;
+   
 
     
     @SuppressWarnings({"rawtypes", "UseSpecificCatch"})
@@ -66,25 +64,6 @@ public class AutenticacaoController {
     }
 
     
-    @PostMapping("/cadastrar")
-    @Operation(summary = "Cadastra um novo usuário", description = "Cadastra um novo usuário no sistema")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Usuário cadastrado com sucesso"),
-        @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
-    public ResponseEntity<String> cadastrar(@RequestBody @Validated CadastrarRequest cadastrarRequest) {
-        try {
-            autenticacaoService.cadastrar(cadastrarRequest);
-            return ResponseEntity.ok("Usuário cadastrado com sucesso");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao cadastrar usuário");
-        }
-    }
-    
-    
     @PostMapping("/logout")
     @Operation(summary = "Desloga um usuário", description = "Invalida o token JWT e desloga o usuário")
     @ApiResponses({
@@ -94,7 +73,7 @@ public class AutenticacaoController {
     })
     public ResponseEntity<String> logout(@RequestBody String token) {
         try {
-            logoutService.invalidarToken(token);
+            autenticacaoService.invalidarToken(token);
             return ResponseEntity.ok("Logout realizado com sucesso");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar logout");

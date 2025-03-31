@@ -1,5 +1,7 @@
 package com.Desbrave.Desbrave.service;
 
+import com.Desbrave.Desbrave.DTO.CadastrarRequest;
+import com.Desbrave.Desbrave.constants.TipoUsuario;
 import com.Desbrave.Desbrave.model.TokenRecuperacao;
 import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.repository.TokenRecuperacaoRepository;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -55,7 +58,24 @@ public class UsuarioService {
         }
         return false;
     }
-
+    
+         public void cadastrar(CadastrarRequest cadastrarRequest) {
+    
+            if (usuarioRepository.findByEmail(cadastrarRequest.getEmail()).isPresent()) {
+                throw new IllegalArgumentException("Email já cadastrado");
+            }
+    
+            Usuario novoUsuario = new Usuario();
+            novoUsuario.setNome(cadastrarRequest.getNome());
+            novoUsuario.setEmail(cadastrarRequest.getEmail());
+            novoUsuario.setSenha(passwordEncoder.encode(cadastrarRequest.getSenha()));
+            novoUsuario.setTipoUsuario(TipoUsuario.valueOf(cadastrarRequest.getTipoUsuario().toUpperCase()));
+            novoUsuario.setDataCriacao(LocalDate.now());
+            novoUsuario.setPontuacaoTotal(0);
+    
+            usuarioRepository.save(novoUsuario);
+        }
+    
     @Transactional
     public void criarTokenRecuperacao(String email) {
         // Remove tokens existentes para este email
@@ -106,4 +126,5 @@ public class UsuarioService {
             );
         }
     }
+
 }

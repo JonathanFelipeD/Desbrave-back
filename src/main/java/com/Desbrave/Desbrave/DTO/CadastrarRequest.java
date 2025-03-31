@@ -1,6 +1,5 @@
 package com.Desbrave.Desbrave.DTO;
 
-import java.time.LocalDate;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +10,9 @@ import lombok.Setter;
 @Setter
 public class CadastrarRequest {
     @NotNull
+    private String nome;
+
+    @NotNull
     @Email
     private String email;
 
@@ -20,8 +22,7 @@ public class CadastrarRequest {
     @NotNull
     private String tipoUsuario;
 
-    @NotNull
-    private LocalDate dataNascimento; // Pode ser nulo
+   
 
    
     

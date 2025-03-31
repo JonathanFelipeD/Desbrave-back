@@ -40,7 +40,7 @@ public class Usuario implements UserDetails {
     private Long id;
 
     
-    private String nomeCompleto;
+    private String nome;
     private String email;
     private String senha;
     private LocalDate dataNascimento;
