@@ -51,7 +51,8 @@ public class Usuario implements UserDetails {
     private String resetToken;
     private LocalDate dataExpiracaoToken;
 
-    public Usuario(String email, String senha, TipoUsuario tipoUsuario) {
+    public Usuario(String nome,String email, String senha, TipoUsuario tipoUsuario) {
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
