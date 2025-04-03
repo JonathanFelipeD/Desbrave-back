@@ -39,8 +39,8 @@ public class Forum {
     @Column(name = "usuario_idusuario", nullable = false)
     private Integer usuarioId;
 
-      @OneToMany(mappedBy = "forum")
-      private List<Postagem> postagens = new ArrayList<>();
+    @OneToMany(mappedBy = "forum")
+    private List<Postagem> postagens = new ArrayList<>();
 
 
 }

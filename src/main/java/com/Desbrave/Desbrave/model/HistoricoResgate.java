@@ -38,17 +38,17 @@ public class HistoricoResgate {
     @Column(name = "tipo_resgate")
     private TipoResgate tipoResgate;
 
-      @ManyToOne
-      @JoinColumn(name = "parceriaCupom_id")
-      private ParceriaCupom parceriaCupom;
+    @ManyToOne
+    @JoinColumn(name = "parceriaCupom_id")
+    private ParceriaCupom parceriaCupom;
 
     @ManyToOne
     @JoinColumn(name = "cupom_id")
     private Cupom cupom;
 
-     @PrePersist
+    @PrePersist
     protected void onCreate(){
-        this.dataResgate = LocalDate.now();
+      this.dataResgate = LocalDate.now();
     }
 
 }
