@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Desbrave.Desbrave.DTO.LoginRequest;
 import com.Desbrave.Desbrave.DTO.LoginResponseDTO;
 import com.Desbrave.Desbrave.config.SecurityConfig;
-import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.security.TokenService;
 import com.Desbrave.Desbrave.service.AutenticacaoService;
 
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @RestController
 @RequestMapping("/autenticacao")
 @RequiredArgsConstructor
@@ -43,22 +43,25 @@ public class AutenticacaoController {
 
     
     @SuppressWarnings({"rawtypes", "UseSpecificCatch"})
-    @PostMapping("/login")
     @Operation(summary = "Autentica um usuário", description = "Autentica um usuário e retorna um token de acesso")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário autenticado com sucesso"),
         @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Validated LoginRequest loginRequest) {
       try { var UsuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
        
        var auth = authenticationManager.authenticate(UsuarioSenha);
-
-       var token = tokenService.gerarToken((Usuario)auth.getPrincipal());
-
+    
+       String emailAuth = auth.getName();
+    
+       var token = tokenService.gerarToken(emailAuth);
+       
          return ResponseEntity.ok(new LoginResponseDTO(token));
     } catch (Exception e) {
+        
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
     }
     }
