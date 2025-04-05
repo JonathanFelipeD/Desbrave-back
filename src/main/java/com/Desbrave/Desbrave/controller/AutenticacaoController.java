@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +43,7 @@ public class AutenticacaoController {
    
 
     
-    @SuppressWarnings({"rawtypes", "UseSpecificCatch"})
+    @SuppressWarnings({"UseSpecificCatch"})
     @Operation(summary = "Autentica um usuário", description = "Autentica um usuário e retorna um token de acesso")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Usuário autenticado com sucesso"),
@@ -50,38 +51,33 @@ public class AutenticacaoController {
         @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Validated LoginRequest loginRequest) {
-      try { var UsuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
-       
-       var auth = authenticationManager.authenticate(UsuarioSenha);
-    
-       String emailAuth = auth.getName();
-    
-       var token = tokenService.gerarToken(emailAuth);
-       
-         return ResponseEntity.ok(new LoginResponseDTO(token));
-    } catch (Exception e) {
-        
+public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
+    try {
+        var usuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
+        var auth = authenticationManager.authenticate(usuarioSenha);
+        String emailAuth = auth.getName();
+        var token = tokenService.gerarToken(emailAuth);
+        return ResponseEntity.ok(new LoginResponseDTO(token));
+    } catch (BadCredentialsException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno no servidor");
     }
-    }
+}
 
     
     @PostMapping("/logout")
-    @Operation(summary = "Desloga um usuário", description = "Invalida o token JWT e desloga o usuário")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Logout realizado com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Token inválido ou expirado"), 
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
-    public ResponseEntity<String> logout(@RequestBody String token) {
-        try {
-            autenticacaoService.invalidarToken(token);
-            return ResponseEntity.ok("Logout realizado com sucesso");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar logout");
-        }
+public ResponseEntity<String> logout(@RequestBody String token) {
+    if (token == null || token.isEmpty()) {
+        return ResponseEntity.badRequest().body("Token inválido ou não fornecido");
     }
+    try {
+        autenticacaoService.invalidarToken(token);
+        return ResponseEntity.ok("Logout realizado com sucesso");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar logout");
+    }
+}
     
 
 }
