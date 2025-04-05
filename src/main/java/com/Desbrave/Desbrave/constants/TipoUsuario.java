@@ -1,19 +1,25 @@
 package com.Desbrave.Desbrave.constants;
 
-public enum TipoUsuario{   
-    ADMIN("ADMIN"),
-    USUARIO_COMUM("USUARIO_COMUM");   
-        
-      
+public enum TipoUsuario {
+    ADMIN(0),
+    USER(1);
 
-    private String tipoUsuario;
+    private final int codigo;
 
-    TipoUsuario(String tipoUsuario){
-        this.tipoUsuario = tipoUsuario;
+    TipoUsuario(int codigo) {
+        this.codigo = codigo;
     }
 
-    public String getTipoUsuario(){
-        return tipoUsuario;
+    public int getCodigo() {
+        return codigo;
     }
-      
+
+    public static TipoUsuario fromCodigo(int codigo) {
+        for (TipoUsuario tipo : TipoUsuario.values()) {
+            if (tipo.getCodigo() == codigo) {
+                return tipo;
+            }
+        }
+        throw new IllegalArgumentException("Código inválido para TipoUsuario: " + codigo);
+    }
 }
