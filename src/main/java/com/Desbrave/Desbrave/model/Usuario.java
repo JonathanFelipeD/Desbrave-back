@@ -14,6 +14,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,6 +51,8 @@ public class Usuario implements UserDetails {
     private String resetToken;
     private LocalDate dataExpiracaoToken;
 
+    @OneToMany(mappedBy = "usuario", cascade = jakarta.persistence.CascadeType.ALL, orphanRemoval = true)
+private List<CursoUsuario> cursosIniciados;
 
     public Usuario(String nome,String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;

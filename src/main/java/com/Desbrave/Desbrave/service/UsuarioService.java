@@ -1,6 +1,7 @@
 package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
+import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
 import com.Desbrave.Desbrave.constants.TipoUsuario;
 import com.Desbrave.Desbrave.model.TokenRecuperacao;
 import com.Desbrave.Desbrave.model.Usuario;
@@ -16,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -127,4 +130,44 @@ public class UsuarioService {
         }
     }
 
+    public List<UsuarioCursoDTO> listarCursosIniciadosPorUsuario(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        
+        return usuario.getCursosIniciados().stream()
+                .map(cursoUsuario -> new UsuarioCursoDTO(
+                        cursoUsuario.getCurso().getTitulo(),
+                        cursoUsuario.getProgresso(),
+                        cursoUsuario.getDataInicio()
+                ))
+                .collect(Collectors.toList());
+    }
+
+    // Novo método: Conta a quantidade de cursos iniciados pelo usuário
+    public int contarCursosIniciados(Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        return usuario.getCursosIniciados().size();
+    }
+    // ✅ NOVO MÉTODO ADICIONADO - retorna lista com progresso dos cursos iniciados pelo usuário
+public List<UsuarioCursoDTO> listarCursosComProgresso(Long usuarioId) {
+    Usuario usuario = buscarPorId(usuarioId);
+    if (usuario == null || usuario.getCursosIniciados() == null) {
+        return List.of(); // Retorna lista vazia se o usuário ou os cursos forem nulos
+    }
+
+    return usuario.getCursosIniciados().stream()
+            .map(curso -> new UsuarioCursoDTO(
+                    curso.getCurso().getTitulo(),
+                    curso.getProgresso(),
+                    curso.getDataInicio()
+            ))
+            .collect(Collectors.toList());
 }
+
+
+}
+
+
+
+

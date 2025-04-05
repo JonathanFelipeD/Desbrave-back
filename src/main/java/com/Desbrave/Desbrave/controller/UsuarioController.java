@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
+import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
 import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.service.UsuarioService;
 
@@ -122,5 +123,12 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao cadastrar usuário");
         }
     }
-    
+    @GetMapping("/{id}/cursos-com-progresso")
+@Operation(summary = "Listar cursos iniciados por um usuário com progresso e data de início")
+public ResponseEntity<List<UsuarioCursoDTO>> listarCursosComProgresso(@PathVariable Long id) {
+    List<UsuarioCursoDTO> cursosComProgresso = usuarioService.listarCursosIniciadosPorUsuario(id);
+
+    return ResponseEntity.ok(cursosComProgresso);
+}
+
     }
