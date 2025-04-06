@@ -53,7 +53,7 @@ public class Usuario implements UserDetails {
     private String resetToken;
     private LocalDate dataExpiracaoToken;
 
-
+    // Construtor personalizado
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
@@ -61,7 +61,7 @@ public class Usuario implements UserDetails {
         this.tipoUsuario = tipoUsuario;
     }
 
-
+    // Set automático da data de criação
     @PrePersist
     public void prePersist() {
         this.dataCriacao = LocalDate.now();
@@ -71,7 +71,7 @@ public class Usuario implements UserDetails {
         return "ROLE_" + this.tipoUsuario;
     }
 
-
+    // Novo método para definir o tipo via código numérico
     public void setTipoUsuarioByCodigo(int codigo) {
         this.tipoUsuario = TipoUsuario.fromCodigo(codigo);
     }
