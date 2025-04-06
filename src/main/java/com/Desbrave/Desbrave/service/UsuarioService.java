@@ -2,6 +2,7 @@ package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
+import com.Desbrave.Desbrave.DTO.UsuarioUpdateDTO;
 import com.Desbrave.Desbrave.constants.TipoUsuario;
 import com.Desbrave.Desbrave.model.CursoUsuario;
 import com.Desbrave.Desbrave.model.TokenRecuperacao;
@@ -44,18 +45,29 @@ public class UsuarioService {
         return usuarioRepository.findByEmail(email).orElse(null);
     }
 
-    public Usuario criar(Usuario usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
-    }
+   
 
-    public Usuario atualizar(Long id, Usuario usuario) {
-        if (usuarioRepository.existsById(id)) {
-            usuario.setId(id);
-            return usuarioRepository.save(usuario);
+   public Usuario atualizar(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
+    if (usuarioRepository.existsById(id)) {
+        Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
+        
+        if (usuarioUpdateDTO.getNome() != null) {
+            usuarioExistente.setNome(usuarioUpdateDTO.getNome());
         }
-        return null;
+        if (usuarioUpdateDTO.getEmail() != null) {
+            usuarioExistente.setEmail(usuarioUpdateDTO.getEmail());
+        }
+        if (usuarioUpdateDTO.getSenha() != null) {
+            usuarioExistente.setSenha(usuarioUpdateDTO.getSenha());
+        }
+        if (usuarioUpdateDTO.getDataNascimento() != null) {
+            usuarioExistente.setDataNascimento(usuarioUpdateDTO.getDataNascimento());
+        }
+
+        return usuarioRepository.save(usuarioExistente);
     }
+    return null;
+}
     
     public Boolean deletar(Long id) {
         if (usuarioRepository.existsById(id)) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
+import com.Desbrave.Desbrave.DTO.UsuarioUpdateDTO;
 import com.Desbrave.Desbrave.model.Usuario;
 import com.Desbrave.Desbrave.service.UsuarioService;
 
@@ -54,20 +55,18 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping
-    @Operation(summary = "Cadastrar Usuario")
-    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
-        Usuario novoUsuario = usuarioService.criar(usuario);
-        return ResponseEntity.status(201).body(novoUsuario);
-    }
+    
         
    
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar Usuario por id")
-    public ResponseEntity<Usuario>atualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-        Usuario usuarioAtualizado = usuarioService.atualizar(id , usuario);
-        return ResponseEntity.ok(usuarioAtualizado);
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
+    Usuario usuarioAtualizado = usuarioService.atualizar(id, usuarioUpdateDTO);
+    if (usuarioAtualizado == null) {
+        return ResponseEntity.notFound().build();
     }
+    return ResponseEntity.ok(usuarioAtualizado);
+}
 
     
     @DeleteMapping("/{id}")
