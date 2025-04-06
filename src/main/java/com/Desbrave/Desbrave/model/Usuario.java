@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 import java.util.List;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -50,16 +51,12 @@ public class Usuario implements UserDetails {
     private String resetToken;
     private LocalDate dataExpiracaoToken;
 
-
     public Usuario(String nome,String email, String senha, TipoUsuario tipoUsuario) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
     }
-
-
-
     public String getRoleAsAuthority() {
         return "ROLE_" + this.tipoUsuario; 
     }

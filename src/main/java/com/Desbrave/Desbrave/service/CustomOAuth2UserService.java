@@ -37,7 +37,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     Usuario novoUsuario = new Usuario();
                     novoUsuario.setEmail(googleUser.getEmail());
                     novoUsuario.setNome(googleUser.getName());
-                    novoUsuario.setTipoUsuario(TipoUsuario.USUARIO_COMUM);
+                    novoUsuario.setTipoUsuario(TipoUsuario.USER);
                     return usuarioRepository.save(novoUsuario);
                 });
 
