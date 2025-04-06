@@ -3,8 +3,10 @@ package com.Desbrave.Desbrave.service;
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
 import com.Desbrave.Desbrave.constants.TipoUsuario;
+import com.Desbrave.Desbrave.model.CursoUsuario;
 import com.Desbrave.Desbrave.model.TokenRecuperacao;
 import com.Desbrave.Desbrave.model.Usuario;
+import com.Desbrave.Desbrave.repository.CursoUsuarioRepository;
 import com.Desbrave.Desbrave.repository.TokenRecuperacaoRepository;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
 import com.Desbrave.Desbrave.service.IMPL.EmailServiceImpl;
@@ -28,6 +30,7 @@ public class UsuarioService {
     private final EmailServiceImpl emailServiceImpl;
     private final TokenRecuperacaoRepository tokenRecuperacaoRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CursoUsuarioRepository cursoUsuarioRepository;
 
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
@@ -131,10 +134,35 @@ public class UsuarioService {
     }
 
     public List<UsuarioCursoDTO> listarCursosIniciadosPorUsuario(Long usuarioId) {
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        
-        return usuario.getCursosIniciados().stream()
+    // Busca todos os cursos iniciados pelo usuário através do repositório
+    List<CursoUsuario> cursosIniciados = cursoUsuarioRepository.findByUsuarioId(usuarioId);
+
+    // Mapeia os cursos para a lista de DTOs
+    return cursosIniciados.stream()
+            .map(cursoUsuario -> new UsuarioCursoDTO(
+                    cursoUsuario.getCurso().getTitulo(),
+                    cursoUsuario.getProgresso(),
+                    cursoUsuario.getDataInicio()
+            ))
+            .collect(Collectors.toList());
+}
+
+public int contarCursosIniciados(Long usuarioId) {
+    // Busca a quantidade de cursos iniciados pelo usuário através do repositório
+    return cursoUsuarioRepository.countByUsuarioId(usuarioId);
+}
+    // ✅ NOVO MÉTODO ADICIONADO - retorna lista com progresso dos cursos iniciados pelo usuário
+    public List<UsuarioCursoDTO> listarCursosComProgresso(Long usuarioId) {
+        // Busca todos os cursos iniciados pelo usuário através do repositório
+        List<CursoUsuario> cursosIniciados = cursoUsuarioRepository.findByUsuarioId(usuarioId);
+    
+        // Se a lista de cursos estiver vazia, retorna uma lista vazia
+        if (cursosIniciados.isEmpty()) {
+            return List.of(); // Retorna lista vazia se não houver cursos
+        }
+    
+        // Mapeia os cursos para a lista de DTOs
+        return cursosIniciados.stream()
                 .map(cursoUsuario -> new UsuarioCursoDTO(
                         cursoUsuario.getCurso().getTitulo(),
                         cursoUsuario.getProgresso(),
@@ -142,29 +170,6 @@ public class UsuarioService {
                 ))
                 .collect(Collectors.toList());
     }
-
-    // Novo método: Conta a quantidade de cursos iniciados pelo usuário
-    public int contarCursosIniciados(Long usuarioId) {
-        Usuario usuario = usuarioRepository.findById(usuarioId)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return usuario.getCursosIniciados().size();
-    }
-    // ✅ NOVO MÉTODO ADICIONADO - retorna lista com progresso dos cursos iniciados pelo usuário
-public List<UsuarioCursoDTO> listarCursosComProgresso(Long usuarioId) {
-    Usuario usuario = buscarPorId(usuarioId);
-    if (usuario == null || usuario.getCursosIniciados() == null) {
-        return List.of(); // Retorna lista vazia se o usuário ou os cursos forem nulos
-    }
-
-    return usuario.getCursosIniciados().stream()
-            .map(curso -> new UsuarioCursoDTO(
-                    curso.getCurso().getTitulo(),
-                    curso.getProgresso(),
-                    curso.getDataInicio()
-            ))
-            .collect(Collectors.toList());
-}
-
 
 }
 

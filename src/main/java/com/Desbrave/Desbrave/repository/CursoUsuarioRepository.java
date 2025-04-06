@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface CursoUsuarioRepository extends JpaRepository<CursoUsuario, Long> {
     List<CursoUsuario> findByUsuarioId(Long usuarioId);
+    int countByUsuarioId(Long usuarioId);
 }

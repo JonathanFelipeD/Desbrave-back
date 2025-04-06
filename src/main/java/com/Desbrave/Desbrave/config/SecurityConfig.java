@@ -45,7 +45,6 @@ public class SecurityConfig {
 
 
     
-    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http,
                                                    OAuth2UserService<OAuth2UserRequest, OAuth2User> oauth2UserService) throws Exception {

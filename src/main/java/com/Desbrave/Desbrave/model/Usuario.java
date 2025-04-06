@@ -45,6 +45,7 @@ public class Usuario implements UserDetails {
     private String senha;
     private LocalDate dataNascimento;
     private TipoUsuario tipoUsuario; 
+    
     private LocalDate dataCriacao;
     private long pontuacaoTotal;
 

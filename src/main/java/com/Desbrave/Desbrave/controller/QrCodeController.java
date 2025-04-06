@@ -33,6 +33,9 @@ public class QrCodeController {
     @PostMapping
     @Operation(summary = "Cadastrar QrCode")
     public ResponseEntity<QrCode> criarQrCode(@RequestBody QrCode qrCode) {
+        if (qrCode.getId() != null) {
+            return ResponseEntity.badRequest().body(null); 
+        }
         QrCode novoQrCode = qrCodeService.criarQrCode(qrCode);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoQrCode);
     }

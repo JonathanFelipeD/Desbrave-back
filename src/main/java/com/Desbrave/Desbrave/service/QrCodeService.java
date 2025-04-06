@@ -3,6 +3,9 @@ package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.model.QrCode;
 import com.Desbrave.Desbrave.repository.QrCodeRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +19,16 @@ private final QrCodeRepository qrCodeRepository;
         this.qrCodeRepository = qrCodeRepository;
     }
 
+    @Transactional
     public QrCode criarQrCode(QrCode qrCode) {
         return qrCodeRepository.save(qrCode);
+    }
+
+    public Optional<QrCode> atualizarQrCode(Long id, QrCode qrCodeAtualizado) {
+        return qrCodeRepository.findById(id).map(qrCode -> {
+            qrCode.setCodigo(qrCodeAtualizado.getCodigo());
+            return qrCodeRepository.save(qrCode);
+        });
     }
 
     public List<QrCode> listarQrCodes() {
@@ -28,12 +39,7 @@ private final QrCodeRepository qrCodeRepository;
         return qrCodeRepository.findById(id);
     }
 
-    public Optional<QrCode> atualizarQrCode(Long id, QrCode qrCodeAtualizado) {
-        return qrCodeRepository.findById(id).map(qrCode -> {
-            qrCode.setCodigo(qrCodeAtualizado.getCodigo());
-            return qrCodeRepository.save(qrCode);
-        });
-    }
+    
 
     public boolean deletarQrCode(Long id) {
         return qrCodeRepository.findById(id).map(qrCode -> {
