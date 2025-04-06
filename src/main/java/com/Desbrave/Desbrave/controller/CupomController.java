@@ -1,7 +1,6 @@
 package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.model.Cupom;
-import com.Desbrave.Desbrave.repository.CupomRepository;
+import com.Desbrave.Desbrave.service.CupomService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,16 +27,18 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "Cupom", description = "Endpoints para gerenciamento de cupons")
 public class CupomController {
 
+    private final CupomService cupomService;
+
     @PostMapping
     @Operation(summary = "Cadastrar um cupom", description = "Cadastra um novo cupom")
-    public Cupom cadastrarCupom(@RequestBody Cupom idCupom) {
-        return cupomRepository.save(idCupom);
+    public Cupom cadastrarCupom(@RequestBody Cupom cupom) {
+        return cupomService.criarCupom(cupom);
     }
 
     @GetMapping
     @Operation(summary = "Listar cupons", description = "Lista todos os cupons cadastrados")
-    public List<Cupom> listaCupons(){
-        return cupomRepository.findAll();
+    public List<Cupom> listaCupons() {
+        return cupomService.listarCupons();
     }
 
     @DeleteMapping("/{id}")
@@ -45,8 +46,8 @@ public class CupomController {
     @ApiResponse(responseCode = "200", description = "Cupom deletado com sucesso")
     @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    public void deletarCupom(@PathVariable("id") Long idCupom){
-        cupomRepository.deleteById(idCupom);    
+    public void deletarCupom(@PathVariable("id") Long idCupom) {
+        cupomService.deletarCupom(idCupom);
     }
 
     @PutMapping("/{id}")
@@ -54,24 +55,7 @@ public class CupomController {
     @ApiResponse(responseCode = "200", description = "Cupom atualizado com sucesso")
     @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    public Cupom atualizarCupomPeloId(@PathVariable("id") Long idCupom, @RequestBody Cupom cupom){
-        Optional<Cupom> cupomExistente = cupomRepository.findById(idCupom);
-        if(cupomExistente.isPresent()){
-            Cupom cupomObj = cupomExistente.get();
-            cupomObj.setCodigo(cupom.getCodigo());
-            cupomObj.setDesconto(cupom.getDesconto());
-            cupomObj.setTipoCupom(cupom.getTipoCupom());
-
-            return cupomRepository.save(cupomObj);
-
-        }
-        return null;
-        
+    public Cupom atualizarCupomPeloId(@PathVariable("id") Long idCupom, @RequestBody Cupom cupom) {
+        return cupomService.atualizarCupom(idCupom, cupom);
     }
-
-
-
-
-   
-    private final CupomRepository cupomRepository;
 }

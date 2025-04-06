@@ -50,6 +50,13 @@ public class Cupom {
     )
     private List<Cursos> cursos = new ArrayList<>(); 
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "cupom_parceria",
+        joinColumns = @JoinColumn(name = "cupom_id"),
+        inverseJoinColumns = @JoinColumn(name = "parceria_id")
+    )
+    private List<Parceria> parcerias = new ArrayList<>();
 
 
 

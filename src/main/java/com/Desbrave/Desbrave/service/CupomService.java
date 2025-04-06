@@ -1,6 +1,8 @@
 package com.Desbrave.Desbrave.service;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,8 @@ public class CupomService {
                 .orElseThrow(() -> new RuntimeException("Cupom não Encontrado"));
     }
 
+    
+
     public void deletarCupom(Long id) {
         if (!cupomRepository.existsById(id)) {
             throw new RuntimeException("Cupom não encontrado para Deletar.");
@@ -51,5 +55,32 @@ public class CupomService {
             return desconto;
         }
 
+    }
+
+    public List<Cupom> listarCupons() {
+        return cupomRepository.findAll();
+    }
+
+    public Cupom atualizarCupom(Long idCupom, Cupom cupom) {
+        Optional<Cupom> cupomExistente = cupomRepository.findById(idCupom);
+        if (cupomExistente.isPresent()) {
+            Cupom cupomObj = cupomExistente.get();
+            cupomObj.setCodigo(cupom.getCodigo());
+            cupomObj.setDesconto(cupom.getDesconto());
+            cupomObj.setTipoCupom(cupom.getTipoCupom());
+            
+            // Atualize cursos e parcerias se fornecidos
+            if (cupom.getCursos() != null) {
+                cupomObj.setCursos(cupom.getCursos());
+            }
+            
+             if (cupom.getParcerias() != null) {
+                 cupomObj.setParcerias(cupom.getParcerias());
+             }
+    
+             
+            return cupomRepository.save(cupomObj);
+        }
+        throw new RuntimeException("Cupom não encontrado para atualização.");
     }
 }
