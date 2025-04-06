@@ -1,55 +1,78 @@
 package com.Desbrave.Desbrave.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
+import com.Desbrave.Desbrave.DTO.*;
+import com.Desbrave.Desbrave.model.*;
+import com.Desbrave.Desbrave.repository.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import com.Desbrave.Desbrave.model.QrCode;
-import com.Desbrave.Desbrave.model.Usuario;
-import com.Desbrave.Desbrave.model.UsuarioQrCode;
-import com.Desbrave.Desbrave.repository.QrCodeRepository;
-import com.Desbrave.Desbrave.repository.UsuarioQrCodeRepository;
-import com.Desbrave.Desbrave.repository.UsuarioRepository;
-
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UsuarioQrCodeService {
 
-    
     private final UsuarioRepository usuarioRepository;
-
-    
     private final QrCodeRepository qrCodeRepository;
-
-    
     private final UsuarioQrCodeRepository usuarioQrCodeRepository;
 
-    public UsuarioQrCode associarUsuarioQrCode(Long usuarioId, Long qrCodeId) {
+    public UsuarioQrCodeResponse associarUsuarioQrCode(UsuarioQrCodeRequest request) {
+        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         
-        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        QrCode qrCode = qrCodeRepository.findById(qrCodeId).orElseThrow(() -> new RuntimeException("QR Code não encontrado"));
+        QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
+                .orElseThrow(() -> new RuntimeException("QR Code não encontrado"));
 
-       
         UsuarioQrCode usuarioQrCode = new UsuarioQrCode();
         usuarioQrCode.setUsuario(usuario);
         usuarioQrCode.setQrCode(qrCode);
         usuarioQrCode.setDataEscaneamento(LocalDateTime.now());
 
-        return usuarioQrCodeRepository.save(usuarioQrCode);
+        UsuarioQrCode saved = usuarioQrCodeRepository.save(usuarioQrCode);
+        return toResponse(saved);
     }
 
-    public List<UsuarioQrCode> listarAssociacoes() {
-        return usuarioQrCodeRepository.findAll();
+    public List<UsuarioQrCodeResponse> listarAssociacoes() {
+        return usuarioQrCodeRepository.findAll().stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public List<UsuarioQrCode> buscarAssociacoesPorUsuarioId(Long usuarioId) {
-        return usuarioQrCodeRepository.findByUsuarioId(usuarioId);
+    public List<UsuarioQrCodeResponse> buscarAssociacoesPorUsuarioId(Long usuarioId) {
+        return usuarioQrCodeRepository.findByUsuarioId(usuarioId).stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public List<UsuarioQrCode> buscarAssociacoesPorQrCodeId(Long qrCodeId) {
-        return usuarioQrCodeRepository.findByQrCodeId(qrCodeId);
+    public List<UsuarioQrCodeResponse> buscarAssociacoesPorQrCodeId(Long qrCodeId) {
+        return usuarioQrCodeRepository.findByQrCodeId(qrCodeId).stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    private UsuarioQrCodeResponse toResponse(UsuarioQrCode usuarioQrCode) {
+        return new UsuarioQrCodeResponse(
+                usuarioQrCode.getId(),
+                toUsuarioResponse(usuarioQrCode.getUsuario()),
+                toQrCodeResponse(usuarioQrCode.getQrCode()),
+                usuarioQrCode.getDataEscaneamento()
+        );
+    }
+
+    private UsuarioResponse toUsuarioResponse(Usuario usuario) {
+        return new UsuarioResponse(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail()
+        );
+    }
+
+    private QrCodeResponse toQrCodeResponse(QrCode qrCode) {
+        return new QrCodeResponse(
+                qrCode.getId(),
+                qrCode.getCodigo()
+        );
     }
 }

@@ -38,7 +38,7 @@ public class UsuarioController {
     @SuppressWarnings("unused")
     private final EmailServiceImpl emailServiceImpl;
 
-    
+    @GetMapping
     @Operation(summary = "Listar Usuarios")
     public ResponseEntity<List<Usuario>>listarUsuarios(){
         List<Usuario>usuarios= usuarioService.listarTodos();

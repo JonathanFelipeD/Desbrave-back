@@ -47,7 +47,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                     String authority = "ROLE_" + usuario.getTipoUsuario().name();
 
                     UserDetails userDetails = User.withUsername(usuario.getEmail())
-                            .password("")
+                            .password(usuario.getSenha())
+                            .accountExpired(false)
                             .authorities(authority)
                             .build();
 

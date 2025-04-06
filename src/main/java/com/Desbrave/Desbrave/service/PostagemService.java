@@ -1,52 +1,83 @@
 package com.Desbrave.Desbrave.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.Desbrave.Desbrave.DTO.PostagemRequest;
+import com.Desbrave.Desbrave.DTO.PostagemResponse;
+import com.Desbrave.Desbrave.model.*;
+import com.Desbrave.Desbrave.repository.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;   
+import org.springframework.web.server.ResponseStatusException;
 
-import com.Desbrave.Desbrave.model.Postagem;
-import com.Desbrave.Desbrave.repository.PostagemRepository;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PostagemService {
-
     private final PostagemRepository postagemRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final ForumRepository forumRepository;
 
-    public PostagemService(PostagemRepository postagemRepository) {
-        this.postagemRepository = postagemRepository;
-    }
-
-    public Postagem criarPostagem(Postagem postagem) {
-        Postagem postagemCriada = postagemRepository.save(postagem);
-        System.out.println("Postagem Criada com Sucesso!");
-        return postagemCriada;
-    }
-
-    public List<Postagem> listaPostagens() {
-        return postagemRepository.findAll();
-    }
-
-    public void deletarPostagem(@PathVariable("id") Long isPostagem) {
-        postagemRepository.deleteById(isPostagem);
-        System.out.println("Postagem Deletada com Sucesso!");
-    }
-
-    public Postagem atualizarPostagem(@PathVariable("id") Long idPostagem, @RequestBody Postagem postagem) {
-        Optional<Postagem> postagemExistente = postagemRepository.findById(idPostagem);
-        if (postagemExistente.isPresent()) {
-            Postagem postagemNova = postagemExistente.get();
-            postagemNova.setCounteudo(postagem.getCounteudo());
-            postagemNova.setDataPostagem(postagem.getDataPostagem());
-
-            Postagem postagemNovaAtualizada = postagemRepository.save(postagemNova);
-            System.out.println("Postagem Atualizada Com Sucesso!");
-
-            return postagemNovaAtualizada;
+    public PostagemResponse criarPostagem(PostagemRequest request) {
+        Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+        
+        Forum forum = null;
+        if (request.getForumId() != null) {
+            forum = forumRepository.findById(request.getForumId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fórum não encontrado"));
         }
-        return postagem;
+
+        Postagem postagem = new Postagem();
+        postagem.setConteudo(request.getConteudo());
+        // postagem.setUsuario(usuario);
+        // postagem.setForum(forum);
+
+        Postagem saved = postagemRepository.save(postagem);
+        return toResponse(saved);
     }
 
+    public List<PostagemResponse> listarPostagens() {
+        return postagemRepository.findAll().stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void deletarPostagem(Long id) {
+        if (!postagemRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada");
+        }
+        postagemRepository.deleteById(id);
+    }
+
+    public PostagemResponse atualizarPostagem(Long id, PostagemRequest request) {
+        Postagem postagem = postagemRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada"));
+
+        postagem.setConteudo(request.getConteudo());
+        
+        if (request.getForumId() != null) {
+            Forum forum = forumRepository.findById(request.getForumId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fórum não encontrado"));
+            postagem.setForum(forum);
+        }
+
+        Postagem updated = postagemRepository.save(postagem);
+        return toResponse(updated);
+    }
+
+    private PostagemResponse toResponse(Postagem postagem) {
+        PostagemResponse response = new PostagemResponse();
+        response.setId(postagem.getId());
+        response.setConteudo(postagem.getConteudo());
+        response.setDataPostagem(postagem.getDataPostagem());
+        response.setNomeUsuario(postagem.getUsuario().getNome());
+        
+        if (postagem.getForum() != null) {
+            response.setTituloForum(postagem.getForum().getTitulo());
+        }
+        
+        return response;
+    }
 }

@@ -55,17 +55,17 @@ public class SecurityConfig {
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.POST, "/autenticacao/login").permitAll()
             .requestMatchers(HttpMethod.POST, "/api/usuarios/cadastrar").permitAll()
-            .requestMatchers(HttpMethod.POST, "/api/usuarios", "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.PUT, "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.DELETE, "/api/usuarios" , "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-            .requestMatchers(HttpMethod.GET,   "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").hasRole("ADMIN")
-            .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
-            .requestMatchers("/api/usuarios/recuperar-senha", "/api/usuarios/redefinir-senha").permitAll()
-            .anyRequest().authenticated()
+            // .requestMatchers(HttpMethod.POST, "/api/usuarios", "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").permitAll()
+            // .requestMatchers(HttpMethod.PUT, "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").permitAll()
+            // .requestMatchers(HttpMethod.DELETE, "/api/usuarios" , "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").permitAll()
+            // .requestMatchers(HttpMethod.GET,   "/cursos", "/qrcodes", "/cupom", "/parcerias", "/forum").permitAll()
+            // .requestMatchers("v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html/**").permitAll()
+            // .requestMatchers("/api/usuarios/recuperar-senha", "/api/usuarios/redefinir-senha").permitAll()
+            .anyRequest().permitAll()
             )
-        .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
-    }
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
+        }
     
   
     
