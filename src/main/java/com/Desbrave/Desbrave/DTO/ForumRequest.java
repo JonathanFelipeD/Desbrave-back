@@ -2,7 +2,6 @@ package com.Desbrave.Desbrave.DTO;
 
 
 
-import java.util.UUID;
 
 import com.Desbrave.Desbrave.constants.Titulo;
 
@@ -11,7 +10,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import jakarta.validation.constraints.NotNull;
 
 @NoArgsConstructor      
 @AllArgsConstructor
@@ -19,12 +17,11 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 public class ForumRequest {
     @NotBlank
-    private String titulo; // Remove o "tituloEnum"
+    private String titulo; 
 
     private String descricao;
 
-    @NotNull
-    private UUID usuarioId; // Troque de "int" para "Long"
+
 
 
     public String getTitulo() {

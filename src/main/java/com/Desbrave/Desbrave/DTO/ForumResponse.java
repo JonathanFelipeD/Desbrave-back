@@ -12,8 +12,7 @@ public record ForumResponse(
     UUID id,
     String titulo,
     String descricao,
-    LocalDateTime dataCriacao,
-    UUID usuarioId
+    LocalDateTime dataCriacao
 ) {
     
     public ForumResponse(Forum forum) {
@@ -21,8 +20,8 @@ public record ForumResponse(
             forum.getId(),
             forum.getTitulo(),
             forum.getDescricao(),
-            forum.getDataCriacao(),
-            forum.getUsuario() != null ? forum.getUsuario().getId() : null
+            forum.getDataCriacao()
+            
         );
     }
 }
