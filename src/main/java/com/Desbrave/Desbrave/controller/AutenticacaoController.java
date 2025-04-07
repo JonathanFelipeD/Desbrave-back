@@ -55,8 +55,8 @@ public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest
     try {
         var usuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
         var auth = authenticationManager.authenticate(usuarioSenha);
-        String emailAuth = auth.getName();
-        var token = tokenService.gerarToken(emailAuth);
+        String idAuth = auth.getName();
+        var token = tokenService.gerarToken(idAuth);
         return ResponseEntity.ok(new LoginResponseDTO(token));
     } catch (BadCredentialsException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
