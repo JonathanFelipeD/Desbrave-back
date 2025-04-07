@@ -12,5 +12,5 @@ import com.Desbrave.Desbrave.model.Forum;
 public interface ForumRepository extends JpaRepository <Forum,UUID> {
 
     @Query("SELECT f FROM Forum f LEFT JOIN f.usuario u")
-List<ForumView> findAllProjected();
+    List<ForumView> findAllProjected();
 }
