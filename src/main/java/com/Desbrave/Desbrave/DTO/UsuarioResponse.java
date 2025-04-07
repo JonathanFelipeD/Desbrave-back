@@ -15,4 +15,5 @@ public class UsuarioResponse {
     private UUID id;
     private String nome;
     private String email;
+    private long pontuacaoTotal;
 }

@@ -17,7 +17,7 @@ public class UsuarioCupomService {
 
    
     private final UsuarioCupomRepository usuarioCupomRepository;
-private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
 
    
     public UsuarioCupom adicionarCupomAoUsuario(UUID usuarioId, UsuarioCupom cupom){

@@ -1,7 +1,9 @@
 package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
+import com.Desbrave.Desbrave.DTO.UsuarioCompletoResponse;
 import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
+import com.Desbrave.Desbrave.DTO.UsuarioQrCodeResponse;
 import com.Desbrave.Desbrave.DTO.UsuarioUpdateDTO;
 import com.Desbrave.Desbrave.constants.TipoUsuario;
 import com.Desbrave.Desbrave.model.CursoUsuario;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UsuarioService {
 
+    private final UsuarioQrCodeService usuarioQrCodeService;
     private final UsuarioRepository usuarioRepository;
     private final EmailServiceImpl emailServiceImpl;
     private final TokenRecuperacaoRepository tokenRecuperacaoRepository;
@@ -157,6 +160,27 @@ public class UsuarioService {
             .collect(Collectors.toList());
 }
 
+public UsuarioCompletoResponse buscarUsuarioCompleto(UUID id) {
+    Usuario usuario = usuarioRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    
+    List<UsuarioQrCodeResponse> qrCodes = usuarioQrCodeService.buscarAssociacoesPorUsuarioId(id);
+    
+    return new UsuarioCompletoResponse(
+            usuario.getId(),
+            usuario.getNome(),
+            usuario.getEmail(),
+            usuario.getPontuacaoTotal(),
+            qrCodes
+    );
+}
+
+public Long getPontosTotais(UUID usuarioId) {
+    return usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"))
+            .getPontuacaoTotal();
+}
+
 public int contarCursosIniciados(UUID usuarioId) {
     return cursoUsuarioRepository.countByUsuarioId(usuarioId);
 }
@@ -165,11 +189,12 @@ public int contarCursosIniciados(UUID usuarioId) {
        
         List<CursoUsuario> cursosIniciados = cursoUsuarioRepository.findByUsuarioId(usuarioId);
     
-       
+        // Se a lista de cursos estiver vazia, retorna uma lista vazia
         if (cursosIniciados.isEmpty()) {
-            return List.of(); 
+            return List.of(); // Retorna lista vazia se não houver cursos
         }
     
+        // Mapeia os cursos para a lista de DTOs
         return cursosIniciados.stream()
                 .map(cursoUsuario -> new UsuarioCursoDTO(
                         cursoUsuario.getCurso().getTitulo(),

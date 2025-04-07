@@ -25,13 +25,29 @@ public class UsuarioQrCodeService {
         
         QrCode qrCode = qrCodeRepository.findById(request.getQrCodeId())
                 .orElseThrow(() -> new RuntimeException("QR Code não encontrado"));
-
+    
+        
+        if (usuarioQrCodeRepository.existsByUsuarioIdAndQrCodeId(usuario.getId(), qrCode.getId())) {
+            throw new RuntimeException("Este QR Code já foi escaneado por este usuário");
+        }
+    
+       
         UsuarioQrCode usuarioQrCode = new UsuarioQrCode();
         usuarioQrCode.setUsuario(usuario);
         usuarioQrCode.setQrCode(qrCode);
         usuarioQrCode.setDataEscaneamento(LocalDateTime.now());
-
+        
+        
+        Long pontos = qrCode.getPontos() != null ? qrCode.getPontos() : 50L; 
+        usuarioQrCode.setPontosGanhos(pontos);
+        
+        
+        usuario.setPontuacaoTotal(usuario.getPontuacaoTotal() + pontos);
+        
+        
+        usuarioRepository.save(usuario);
         UsuarioQrCode saved = usuarioQrCodeRepository.save(usuarioQrCode);
+        
         return toResponse(saved);
     }
 
@@ -66,7 +82,9 @@ public class UsuarioQrCodeService {
         return new UsuarioResponse(
                 usuario.getId(),
                 usuario.getNome(),
-                usuario.getEmail()
+                usuario.getEmail(),
+                usuario.getPontuacaoTotal()
+                
         );
     }
 

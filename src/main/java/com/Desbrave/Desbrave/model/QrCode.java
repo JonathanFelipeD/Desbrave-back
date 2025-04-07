@@ -20,5 +20,6 @@ public class QrCode {
     
     private String codigo;
 
+    private Long pontos;
 
 }

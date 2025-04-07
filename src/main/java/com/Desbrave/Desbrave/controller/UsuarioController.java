@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.CadastrarRequest;
 import com.Desbrave.Desbrave.DTO.UsuarioCursoDTO;
+import com.Desbrave.Desbrave.DTO.UsuarioQrCodeResponse;
 import com.Desbrave.Desbrave.DTO.UsuarioUpdateDTO;
 import com.Desbrave.Desbrave.model.Usuario;
+import com.Desbrave.Desbrave.service.UsuarioQrCodeService;
 import com.Desbrave.Desbrave.service.UsuarioService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,7 +38,7 @@ import com.Desbrave.Desbrave.service.IMPL.EmailServiceImpl;
 @Tag(name = "Usuario", description = "endpoints para gerenciar usuarios")
 public class UsuarioController {
 
-    
+    private final UsuarioQrCodeService usuarioQrCodeService;
     private final UsuarioService usuarioService;
     @SuppressWarnings("unused")
     private final EmailServiceImpl emailServiceImpl;
@@ -56,8 +58,20 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+
+    @GetMapping("/{id}/qrcodes")
+    @Operation(summary = "Buscar QrCode por id do usuario")
+    public ResponseEntity<List<UsuarioQrCodeResponse>> getQrCodesByUsuarioId(@PathVariable UUID id) {
+    List<UsuarioQrCodeResponse> qrCodes = usuarioQrCodeService.buscarAssociacoesPorUsuarioId(id);
+    return ResponseEntity.ok(qrCodes);
+}
     
-        
+    @GetMapping("/{id}/pontos")
+    @Operation(summary = "Buscar Pontos Totais do Usuario por id")
+    public ResponseEntity<Long> getPontosUsuario(@PathVariable UUID id) {
+    Long pontos = usuarioService.getPontosTotais(id);
+    return ResponseEntity.ok(pontos);
+}
    
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar Usuario por id")
