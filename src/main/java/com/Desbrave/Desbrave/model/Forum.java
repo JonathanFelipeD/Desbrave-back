@@ -52,6 +52,7 @@ public class Forum {
     private List<Postagem> postagens = new ArrayList<>();
 
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false) 
     private Usuario usuario;
@@ -60,10 +61,6 @@ public class Forum {
     public UUID getUsuarioId() {
         return this.usuario != null ? this.usuario.getId() : null;
     }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-   
+
 }
 

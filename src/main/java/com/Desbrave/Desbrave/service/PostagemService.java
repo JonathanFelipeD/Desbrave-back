@@ -2,6 +2,7 @@ package com.Desbrave.Desbrave.service;
 
 import com.Desbrave.Desbrave.DTO.PostagemRequest;
 import com.Desbrave.Desbrave.DTO.PostagemResponse;
+import com.Desbrave.Desbrave.constants.Titulo;
 import com.Desbrave.Desbrave.model.*;
 import com.Desbrave.Desbrave.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -76,7 +77,7 @@ public class PostagemService {
         response.setNomeUsuario(postagem.getUsuario().getNome());
         
         if (postagem.getForum() != null) {
-            response.setTituloForum(postagem.getForum().getTitulo());
+            response.setTituloForum(Titulo.valueOf(postagem.getForum().getTitulo()));
         }
         
         return response;

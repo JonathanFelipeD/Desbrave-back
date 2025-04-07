@@ -26,8 +26,8 @@ public class ForumRequest {
     @NotNull
     private UUID usuarioId; // Troque de "int" para "Long"
 
-    // Converte String para ENUM
-    public Titulo getTitulo() {
-        return Titulo.valueOf(titulo.toUpperCase());
+
+    public String getTitulo() {
+        return String.valueOf(Titulo.valueOf(titulo.toUpperCase()));
     }
 }
