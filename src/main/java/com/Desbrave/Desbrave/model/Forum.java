@@ -51,7 +51,7 @@ public class Forum {
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false) 
+    @JoinColumn(name = "usuario_id") 
     private Usuario usuario;
 
    
