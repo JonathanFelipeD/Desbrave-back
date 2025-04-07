@@ -29,11 +29,20 @@ public class AutenticacaoService implements UserDetailsService {
     private final EmailServiceImpl emailServiceImpl;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o e-mail: " + username));
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+
+        Long userId;
+        try {
+            userId = Long.parseLong(id);
+        } catch (NumberFormatException e) {
+            throw new UsernameNotFoundException("ID de usuário inválido: " + id);
+        }
+
+        Usuario usuario = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com o ID: " + id));
+
         return User.builder()
-                .username(usuario.getEmail())
+                .username(usuario.getId().toString())
                 .password(usuario.getSenha())
                 .roles(usuario.getTipoUsuario().name())
                 .build();
