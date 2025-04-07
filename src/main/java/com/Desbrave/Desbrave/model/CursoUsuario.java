@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class CursoUsuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     @ManyToOne
@@ -23,6 +23,6 @@ public class CursoUsuario {
     @JoinColumn(name = "curso_id")
     private Cursos curso;
 
-    private double progresso;      // porcentagem de progresso do curso
-    private LocalDate dataInicio;  // data de início do curso
+    private double progresso;      
+    private LocalDate dataInicio;  
 }

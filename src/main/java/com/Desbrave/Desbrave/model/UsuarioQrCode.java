@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class UsuarioQrCode {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     

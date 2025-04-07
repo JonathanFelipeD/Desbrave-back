@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 public class Cupom {
 
     @Id
-    @GeneratedValue( strategy =  GenerationType.IDENTITY)
+    @GeneratedValue( strategy =  GenerationType.UUID)
     private Long id;
 
     @Column( nullable =  false, length = 20)

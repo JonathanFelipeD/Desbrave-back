@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 public class UsuarioCupom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long idUsuarioCupom;
 
     @Column(nullable =  false)

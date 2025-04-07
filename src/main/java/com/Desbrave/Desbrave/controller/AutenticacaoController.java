@@ -22,7 +22,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +40,13 @@ public class AutenticacaoController {
     private final TokenService tokenService;
     private final UsuarioRepository usuarioRepository; // Adicionado para buscar ID
 
+
+    @Operation(summary = "Realizar login", description = "Endpoint para realizar o login do usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
+            @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
         try {
@@ -66,6 +72,12 @@ public class AutenticacaoController {
         }
     }
 
+    @Operation(summary = "Realizar logout", description = "Endpoint para realizar o logout do usuário")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Logout realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Token inválido ou não fornecido"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })    
     @PostMapping("/logout")
     public ResponseEntity<String> logout(@RequestBody String token) {
         if (token == null || token.isEmpty()) {

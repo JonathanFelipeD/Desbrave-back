@@ -33,7 +33,7 @@ import lombok.Setter;
 public class Forum {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_forum")
     private Long id;
 
@@ -56,7 +56,7 @@ public class Forum {
     @JoinColumn(name = "usuario_id", nullable = false) 
     private Usuario usuario;
 
-    // Método para serializar apenas o ID
+   
     public Long getUsuarioId() {
         return this.usuario != null ? this.usuario.getId() : null;
     }

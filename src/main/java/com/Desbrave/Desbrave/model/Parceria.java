@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "parceria")
 public class Parceria {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "idParceria")
     private Integer idParceria;
     @Column(nullable = false, length = 100)

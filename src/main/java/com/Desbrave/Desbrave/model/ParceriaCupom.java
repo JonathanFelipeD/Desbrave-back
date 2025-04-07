@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class ParceriaCupom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long idParceriaCupom;
 
     @Column(nullable = false)

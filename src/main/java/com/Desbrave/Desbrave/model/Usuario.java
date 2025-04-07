@@ -36,7 +36,7 @@ import com.Desbrave.Desbrave.constants.TipoUsuario;
 public class Usuario implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
 
     

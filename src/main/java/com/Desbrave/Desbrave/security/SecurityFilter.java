@@ -1,16 +1,12 @@
 package com.Desbrave.Desbrave.security;
 
 import java.io.IOException;
-import java.util.Optional;
-
 
 import com.Desbrave.Desbrave.model.Usuario;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;

@@ -14,7 +14,7 @@ import lombok.Setter;
 public class QrCode {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
     
     private String codigo;

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
     public class Cursos {
     
         @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.UUID)
         @Column(name = "idcursos")
         private int idcursos;
     
