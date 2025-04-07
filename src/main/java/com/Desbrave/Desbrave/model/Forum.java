@@ -37,8 +37,8 @@ public class Forum {
     @Column(name = "id_forum")
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    private Titulo titulo;
+    @Column(nullable = false, length = 50)
+    private String titulo;
 
     @Column(length = 500) 
     private String descricao;
