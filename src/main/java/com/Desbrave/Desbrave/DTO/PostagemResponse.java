@@ -3,7 +3,6 @@ package com.Desbrave.Desbrave.DTO;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.Desbrave.Desbrave.constants.Titulo;
 
 import lombok.Data;
 
@@ -14,7 +13,7 @@ public class PostagemResponse {
     private LocalDate dataPostagem;
     private String nomeUsuario;
     private String tituloForum;
-    public void setTituloForum(Titulo titulo) {
-        this.tituloForum = titulo.getTitulo();
+    public void setTituloForum(String titulo) {
+        this.tituloForum = titulo;
     }
 }

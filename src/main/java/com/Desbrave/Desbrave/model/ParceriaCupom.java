@@ -40,7 +40,7 @@ public class ParceriaCupom {
     
 
    // @ManyToOne
-   // @JoinColumn(name = "Parceria_id")
-  //  private Parceria parceria;
+    //@JoinColumn(name = "Parceria_id")
+    //private Parceria parceria;
 
 }

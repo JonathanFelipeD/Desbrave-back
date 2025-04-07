@@ -19,6 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+// ... outros imports ...
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -51,7 +54,7 @@ public class Parceria {
     @Column(nullable = false)
     private StatusParceria status;
 
-    // Relacionamento reverso (opcional, só se for usar)
     @ManyToMany(mappedBy = "parcerias")
+    @JsonBackReference
     private List<Cupom> cupons;
 }

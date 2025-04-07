@@ -7,9 +7,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.Desbrave.Desbrave.constants.Titulo;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -37,8 +34,8 @@ public class Forum {
     @Column(name = "id_forum")
     private UUID id;
 
-    @Enumerated(EnumType.STRING)
-    private Titulo titulo;
+    @Column(nullable = false, length = 50)
+    private String titulo;
 
     @Column(length = 500) 
     private String descricao;
@@ -52,6 +49,7 @@ public class Forum {
     private List<Postagem> postagens = new ArrayList<>();
 
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false) 
     private Usuario usuario;
@@ -60,10 +58,6 @@ public class Forum {
     public UUID getUsuarioId() {
         return this.usuario != null ? this.usuario.getId() : null;
     }
-    
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-   
+
 }
 

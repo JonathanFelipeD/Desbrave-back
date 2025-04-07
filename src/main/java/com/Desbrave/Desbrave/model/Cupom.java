@@ -21,6 +21,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -49,11 +52,12 @@ public class Cupom {
     )
     private List<Cursos> cursos = new ArrayList<>();
 
-    //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-   // @JoinTable(
-           // name = "cupom_parceria",
-          //  joinColumns = @JoinColumn(name = "cupom_id"),
-          //  inverseJoinColumns = @JoinColumn(name = "parceria_id")
-    //)
-   // private List<Parceria> parcerias = new ArrayList<>();
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "cupom_parceria",
+            joinColumns = @JoinColumn(name = "cupom_id"),
+            inverseJoinColumns = @JoinColumn(name = "parceria_id")
+    )
+    @JsonManagedReference
+    private List<Parceria> parcerias = new ArrayList<>();
 }
