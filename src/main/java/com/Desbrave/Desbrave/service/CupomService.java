@@ -75,13 +75,13 @@ public class CupomService {
                 cupomObj.setCursos(cupom.getCursos());
             }
             
-             if (cupom.getParcerias() != null) {
-                 cupomObj.setParcerias(cupom.getParcerias());
+             //if (cupom.getParcerias() != null) {
+                // cupomObj.setParcerias(cupom.getParcerias());
              }
     
              
             return cupomRepository.save(cupomObj);
         }
-        throw new RuntimeException("Cupom não encontrado para atualização.");
+       // throw new RuntimeException("Cupom não encontrado para atualização.");
     }
 }

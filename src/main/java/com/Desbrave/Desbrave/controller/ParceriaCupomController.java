@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.Desbrave.Desbrave.model.Cupom;
+import com.Desbrave.Desbrave.repository.CupomRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,11 +29,23 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "ParceriaCupom", description = "endpoints para gerenciar parcerias e cupons")
 public class ParceriaCupomController {
 
+    private final ParceriaCupomRepository parceriaCupomRepository;
+    private final CupomRepository cupomRepository;
+
+
+
     @PostMapping
     @Operation(summary = "Cadastrar cupom de parceria")
-    public ParceriaCupom cadastrarParceriaCupom(@RequestBody ParceriaCupom idParceriaCupom) {
+    public ResponseEntity<ParceriaCupom> cadastrarParceriaCupom(@RequestBody ParceriaCupom parceriaCupom) {
+        UUID cupomId = parceriaCupom.getCupom().getId();
 
-        return parceriaCupomRepository.save(idParceriaCupom);
+        Cupom cupom = cupomRepository.findById(cupomId)
+                .orElseThrow(() -> new RuntimeException("Cupom não encontrado com ID: " + cupomId));
+
+        parceriaCupom.setCupom(cupom);
+        ParceriaCupom novaParceriaCupom = parceriaCupomRepository.save(parceriaCupom);
+
+        return ResponseEntity.ok(novaParceriaCupom);
     }
 
     @GetMapping
@@ -59,6 +74,5 @@ public class ParceriaCupomController {
         return null;
     }
 
-    
-    private final ParceriaCupomRepository parceriaCupomRepository;
+
 }

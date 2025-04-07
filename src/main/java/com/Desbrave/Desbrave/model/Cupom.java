@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import com.Desbrave.Desbrave.constants.TipoCupom;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,35 +32,28 @@ public class Cupom {
     @GeneratedValue
     private UUID id;
 
-    @Column( nullable =  false, length = 20)
+    @Column(nullable = false, length = 20)
     private String codigo;
 
     @Column(nullable = false, length = 20)
     private BigDecimal desconto;
 
-
     @Column(nullable = false)
     private TipoCupom tipoCupom;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
-        name = "cupom_curso",
-        joinColumns = @JoinColumn(name = "cupom_id"),
-        inverseJoinColumns = @JoinColumn(name = "curso_id")
+            name = "cupom_curso",
+            joinColumns = @JoinColumn(name = "cupom_id"),
+            inverseJoinColumns = @JoinColumn(name = "curso_id")
     )
-    private List<Cursos> cursos = new ArrayList<>(); 
+    private List<Cursos> cursos = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "cupom_parceria",
-        joinColumns = @JoinColumn(name = "cupom_id"),
-        inverseJoinColumns = @JoinColumn(name = "parceria_id")
-    )
-    private List<Parceria> parcerias = new ArrayList<>();
-
-
-
-
-    
-    
+    //@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+   // @JoinTable(
+           // name = "cupom_parceria",
+          //  joinColumns = @JoinColumn(name = "cupom_id"),
+          //  inverseJoinColumns = @JoinColumn(name = "parceria_id")
+    //)
+   // private List<Parceria> parcerias = new ArrayList<>();
 }
