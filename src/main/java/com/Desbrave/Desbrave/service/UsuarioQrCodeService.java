@@ -74,7 +74,8 @@ public class UsuarioQrCodeService {
                 usuarioQrCode.getId(),
                 toUsuarioResponse(usuarioQrCode.getUsuario()),
                 toQrCodeResponse(usuarioQrCode.getQrCode()),
-                usuarioQrCode.getDataEscaneamento()
+                usuarioQrCode.getDataEscaneamento(),
+                usuarioQrCode.getPontosGanhos()  
         );
     }
 
