@@ -23,7 +23,7 @@ public class PostagemService {
     public PostagemResponse criarPostagem(PostagemRequest request) {
         Usuario usuario = usuarioRepository.findById(request.getUsuarioId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
-        
+
         Forum forum = null;
         if (request.getForumId() != null) {
             forum = forumRepository.findById(request.getForumId())
@@ -32,8 +32,11 @@ public class PostagemService {
 
         Postagem postagem = new Postagem();
         postagem.setConteudo(request.getConteudo());
-        // postagem.setUsuario(usuario);
-        // postagem.setForum(forum);
+        postagem.setUsuario(usuario); 
+
+        if (forum != null) {
+            postagem.setForum(forum); 
+        }
 
         Postagem saved = postagemRepository.save(postagem);
         return toResponse(saved);
@@ -57,7 +60,7 @@ public class PostagemService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada"));
 
         postagem.setConteudo(request.getConteudo());
-        
+
         if (request.getForumId() != null) {
             Forum forum = forumRepository.findById(request.getForumId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Fórum não encontrado"));
@@ -73,12 +76,15 @@ public class PostagemService {
         response.setId(postagem.getId());
         response.setConteudo(postagem.getConteudo());
         response.setDataPostagem(postagem.getDataPostagem());
-        response.setNomeUsuario(postagem.getUsuario().getNome());
-        
+
+        if (postagem.getUsuario() != null) {
+            response.setNomeUsuario(postagem.getUsuario().getNome());
+        }
+
         if (postagem.getForum() != null) {
             response.setTituloForum(postagem.getForum().getTitulo());
         }
-        
+
         return response;
     }
 }

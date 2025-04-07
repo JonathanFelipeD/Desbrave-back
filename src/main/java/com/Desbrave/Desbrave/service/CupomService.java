@@ -70,18 +70,17 @@ public class CupomService {
             cupomObj.setDesconto(cupom.getDesconto());
             cupomObj.setTipoCupom(cupom.getTipoCupom());
             
-            // Atualize cursos e parcerias se fornecidos
+
             if (cupom.getCursos() != null) {
                 cupomObj.setCursos(cupom.getCursos());
             }
             
-             if (cupom.getParcerias() != null) {
-                 cupomObj.setParcerias(cupom.getParcerias());
+             //if (cupom.getParcerias() != null) {
+                // cupomObj.setParcerias(cupom.getParcerias());
              }
     
              
-            return cupomRepository.save(cupomObj);
+            return cupomRepository.save(cupom);
         }
-        throw new RuntimeException("Cupom não encontrado para atualização.");
+       // throw new RuntimeException("Cupom não encontrado para atualização.");
     }
-}
