@@ -1,5 +1,7 @@
 package com.Desbrave.Desbrave.DTO;
 
+import java.util.UUID;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,10 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class QrCodeResponse {
-    private Long id;
+    private UUID id;
     private String codigo;
 
-    public QrCodeResponse(Long id, String codigo) {
+    public QrCodeResponse(UUID id, String codigo) {
         this.id = id;
         this.codigo = codigo;
     }

@@ -1,6 +1,7 @@
 package com.Desbrave.Desbrave.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,11 @@ public class ParceriaCupomService {
         return parceriaCupomRepository.findAll();
     }
 
-    public void deletarParceriaCupom(Long id) {
+    public void deletarParceriaCupom(UUID id) {
         parceriaCupomRepository.deleteById(id);
     }
 
-    public ParceriaCupom atualizarParceriaCupom(Long id, ParceriaCupom parceriaCupom) {
+    public ParceriaCupom atualizarParceriaCupom(UUID id, ParceriaCupom parceriaCupom) {
         ParceriaCupom existente = parceriaCupomRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Cupom não encontrado."));
 

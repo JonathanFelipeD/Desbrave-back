@@ -3,6 +3,7 @@ package com.Desbrave.Desbrave.model;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -11,8 +12,8 @@ import java.time.LocalDate;
 @Table(name = "Postagem")
 public class Postagem {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
 
     @Lob
     @Column(nullable = false)

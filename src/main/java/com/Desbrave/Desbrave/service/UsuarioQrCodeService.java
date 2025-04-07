@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,13 +41,13 @@ public class UsuarioQrCodeService {
                 .collect(Collectors.toList());
     }
 
-    public List<UsuarioQrCodeResponse> buscarAssociacoesPorUsuarioId(Long usuarioId) {
+    public List<UsuarioQrCodeResponse> buscarAssociacoesPorUsuarioId(UUID usuarioId) {
         return usuarioQrCodeRepository.findByUsuarioId(usuarioId).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public List<UsuarioQrCodeResponse> buscarAssociacoesPorQrCodeId(Long qrCodeId) {
+    public List<UsuarioQrCodeResponse> buscarAssociacoesPorQrCodeId(UUID qrCodeId) {
         return usuarioQrCodeRepository.findByQrCodeId(qrCodeId).stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());

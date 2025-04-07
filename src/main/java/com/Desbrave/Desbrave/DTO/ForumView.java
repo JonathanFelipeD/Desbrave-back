@@ -1,20 +1,19 @@
 package com.Desbrave.Desbrave.DTO;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 
 public interface ForumView {
-     // Campos diretos
-     Long getId();
+     UUID getId();
      String getTitulo();
      String getDescricao();
      LocalDateTime getDataCriacao();
      
-     // Projeção aninhada para usuário
      UsuarioView getUsuario();
      
      interface UsuarioView {
-         Long getId();
-         String getNome();
+        UUID getId();
+        String getNome();
      }
 }

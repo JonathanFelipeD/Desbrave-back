@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,14 +35,14 @@ public class PostagemController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar postagem por ID")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarPostagem(@PathVariable Long id) {
+    public void deletarPostagem(@PathVariable UUID id) {
         postagemService.deletarPostagem(id);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar postagem por ID")
     public PostagemResponse atualizarPostagem(
-            @PathVariable Long id, 
+            @PathVariable UUID id, 
             @RequestBody PostagemRequest request) {
         return postagemService.atualizarPostagem(id, request);
     }

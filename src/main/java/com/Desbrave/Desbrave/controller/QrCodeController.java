@@ -1,6 +1,7 @@
 package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class QrCodeController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Buscar QrCode por id")
-    public ResponseEntity<QrCode> buscarQrCodePorId(@PathVariable Long id) {
+    public ResponseEntity<QrCode> buscarQrCodePorId(@PathVariable UUID id) {
         return qrCodeService.buscarQrCodePorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -59,7 +60,7 @@ public class QrCodeController {
     
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar QrCode por id")
-    public ResponseEntity<QrCode> atualizarQrCode(@PathVariable long id, @RequestBody QrCode qrCodeAtualizado) {
+    public ResponseEntity<QrCode> atualizarQrCode(@PathVariable UUID id, @RequestBody QrCode qrCodeAtualizado) {
         return qrCodeService.atualizarQrCode(id, qrCodeAtualizado)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -67,9 +68,9 @@ public class QrCodeController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar QrCode por id")
-    public ResponseEntity<Object> deletarQrCode(@PathVariable long id) {
+    public ResponseEntity<Object> deletarQrCode(@PathVariable UUID id) {
         if (qrCodeService.deletarQrCode(id)) {
-            return ResponseEntity.noContent().build(); // Retorna 204 No Content
+            return ResponseEntity.noContent().build(); 
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("QrCode não encontrado"); // Retorna 404 Not Found com uma mensagem
         }

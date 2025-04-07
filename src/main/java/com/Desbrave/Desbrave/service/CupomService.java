@@ -3,6 +3,7 @@ package com.Desbrave.Desbrave.service;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class CupomService {
 
     
 
-    public void deletarCupom(Long id) {
+    public void deletarCupom(UUID id) {
         if (!cupomRepository.existsById(id)) {
             throw new RuntimeException("Cupom não encontrado para Deletar.");
         }
@@ -61,7 +62,7 @@ public class CupomService {
         return cupomRepository.findAll();
     }
 
-    public Cupom atualizarCupom(Long idCupom, Cupom cupom) {
+    public Cupom atualizarCupom(UUID idCupom, Cupom cupom) {
         Optional<Cupom> cupomExistente = cupomRepository.findById(idCupom);
         if (cupomExistente.isPresent()) {
             Cupom cupomObj = cupomExistente.get();

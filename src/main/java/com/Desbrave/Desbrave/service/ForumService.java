@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +27,8 @@ public class ForumService {
         return forumRepository.findAll();
     }
 
-    public Forum buscarPorId(Integer id) {
-        return forumRepository.findById(id)
-                             .orElse(null); 
+    public Optional<Forum> buscarPorId(UUID id) {
+        return forumRepository.findById(id); 
     }
 
     
@@ -52,7 +53,7 @@ public class ForumService {
     }
 
     @Transactional
-    public Forum atualizar(Long id, Forum forumAtualizado) {
+    public Forum atualizar(UUID id, Forum forumAtualizado) {
         return forumRepository.findById(id).map(forum -> {
             forum.setTitulo(forumAtualizado.getTitulo());
             forum.setDescricao(forumAtualizado.getDescricao());

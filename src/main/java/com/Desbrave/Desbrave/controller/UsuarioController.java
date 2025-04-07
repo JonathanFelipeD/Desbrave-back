@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.Desbrave.Desbrave.service.IMPL.EmailServiceImpl;
 
@@ -50,7 +51,7 @@ public class UsuarioController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Buscar Usuario por id")
-    public ResponseEntity<Usuario>buscarUsuarioPorId(@PathVariable Long id){
+    public ResponseEntity<Usuario>buscarUsuarioPorId(@PathVariable UUID id){
         Usuario usuario = usuarioService.buscarPorId(id);
         return ResponseEntity.ok(usuario);
     }
@@ -60,7 +61,7 @@ public class UsuarioController {
    
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar Usuario por id")
-    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
+    public ResponseEntity<Usuario> atualizarUsuario(@PathVariable UUID id, @RequestBody UsuarioUpdateDTO usuarioUpdateDTO) {
     Usuario usuarioAtualizado = usuarioService.atualizar(id, usuarioUpdateDTO);
     if (usuarioAtualizado == null) {
         return ResponseEntity.notFound().build();
@@ -71,7 +72,7 @@ public class UsuarioController {
     
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar Usuario por id")
-    public ResponseEntity<Usuario>deletarUsuario(@PathVariable Long id){
+    public ResponseEntity<Usuario>deletarUsuario(@PathVariable UUID id){
         usuarioService.deletar(id);
         return ResponseEntity.noContent().build();
     }
@@ -124,7 +125,7 @@ public class UsuarioController {
     }
     @GetMapping("/{id}/cursos-com-progresso")
 @Operation(summary = "Listar cursos iniciados por um usuário com progresso e data de início")
-public ResponseEntity<List<UsuarioCursoDTO>> listarCursosComProgresso(@PathVariable Long id) {
+public ResponseEntity<List<UsuarioCursoDTO>> listarCursosComProgresso(@PathVariable UUID id) {
     List<UsuarioCursoDTO> cursosComProgresso = usuarioService.listarCursosIniciadosPorUsuario(id);
 
     return ResponseEntity.ok(cursosComProgresso);

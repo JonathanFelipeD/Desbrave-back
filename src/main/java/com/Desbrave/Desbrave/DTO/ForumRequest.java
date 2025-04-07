@@ -2,6 +2,8 @@ package com.Desbrave.Desbrave.DTO;
 
 
 
+import java.util.UUID;
+
 import com.Desbrave.Desbrave.constants.Titulo;
 
 import jakarta.validation.constraints.NotBlank;
@@ -22,7 +24,7 @@ public class ForumRequest {
     private String descricao;
 
     @NotNull
-    private Long usuarioId; // Troque de "int" para "Long"
+    private UUID usuarioId; // Troque de "int" para "Long"
 
     // Converte String para ENUM
     public Titulo getTitulo() {

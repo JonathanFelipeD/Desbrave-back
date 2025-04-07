@@ -2,10 +2,9 @@ package com.Desbrave.Desbrave.constants;
 
 
 public enum Titulo {
-    ANUNCIO,
-    DUVIDA,
-    DISCUSSAO,
-    SUGESTAO;
+    TECNOLOGIA,
+    CULTURA,
+    CIDADANIA_DIGITAL;
 
     public String getTitulo() {
         return this.name(); 

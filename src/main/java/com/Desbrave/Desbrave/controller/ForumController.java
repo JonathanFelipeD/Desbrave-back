@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
-
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +53,7 @@ public class ForumController {
 }
 @GetMapping("/{id}")
 @Operation(summary = "Buscar Forum por id")
-public ResponseEntity<ForumResponse> getForumById(@PathVariable Integer id) {
+public ResponseEntity<ForumResponse> getForumById(@PathVariable UUID id) {
     Forum forum = forumRepository.findById(id)
                                .orElseThrow(() -> new RuntimeException("Forum Não Encontrado"));
     
@@ -62,7 +62,7 @@ public ResponseEntity<ForumResponse> getForumById(@PathVariable Integer id) {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar Forum", description = "Deleta um Forum pelo id")
-        public void deletarForum(@PathVariable Integer id){
+        public void deletarForum(@PathVariable UUID id){
             forumRepository.deleteById(id);   
         } 
     

@@ -1,13 +1,13 @@
 package com.Desbrave.Desbrave.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.Desbrave.Desbrave.constants.TipoParceriaCupom;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,8 +24,8 @@ import lombok.NoArgsConstructor;
 public class ParceriaCupom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long idParceriaCupom;
+    @GeneratedValue
+    private UUID idParceriaCupom;
 
     @Column(nullable = false)
     private LocalDateTime validade;

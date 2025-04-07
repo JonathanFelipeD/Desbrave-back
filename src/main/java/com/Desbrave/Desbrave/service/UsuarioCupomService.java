@@ -1,5 +1,7 @@
 package com.Desbrave.Desbrave.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.Desbrave.Desbrave.model.Usuario;
@@ -18,7 +20,7 @@ public class UsuarioCupomService {
 private final UsuarioRepository usuarioRepository;
 
    
-    public UsuarioCupom adicionarCupomAoUsuario(Long usuarioId, UsuarioCupom cupom){
+    public UsuarioCupom adicionarCupomAoUsuario(UUID usuarioId, UsuarioCupom cupom){
         Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
 
         cupom.setUsuario(usuario);

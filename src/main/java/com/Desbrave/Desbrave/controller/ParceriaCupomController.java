@@ -2,7 +2,7 @@ package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,13 +41,13 @@ public class ParceriaCupomController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar cupom de parceria")
-    public void deletarParceriaCupom(@PathVariable("id") Long idParceriaCupom) {
+    public void deletarParceriaCupom(@PathVariable("id") UUID idParceriaCupom) {
         parceriaCupomRepository.deleteById(idParceriaCupom);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar cupom de parceria por id")
-    public ParceriaCupom atualizarParceriaCupom(@PathVariable("id") Long idParceriaCupom, @RequestBody ParceriaCupom parceriaCupom){
+    public ParceriaCupom atualizarParceriaCupom(@PathVariable("id") UUID idParceriaCupom, @RequestBody ParceriaCupom parceriaCupom){
         Optional<ParceriaCupom> parceriaCupomExistente = parceriaCupomRepository.findById(idParceriaCupom);
         if(parceriaCupomExistente.isPresent()){
             ParceriaCupom parceriaCupom2 = parceriaCupomExistente.get();

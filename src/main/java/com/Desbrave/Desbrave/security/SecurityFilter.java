@@ -1,6 +1,7 @@
 package com.Desbrave.Desbrave.security;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.Desbrave.Desbrave.model.Usuario;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,7 +35,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             try {
                 String userId = tokenService.validarToken(token);
                 if (userId != null) {
-                    usuarioRepository.findById(Long.parseLong(userId))
+                    usuarioRepository.findById(UUID.fromString(userId))
                             .ifPresent(this::authenticateUser);
                 }
             } catch (Exception e) {

@@ -29,9 +29,9 @@ public class AutenticacaoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        Long userId;
+        UUID userId;
         try {
-            userId = Long.parseLong(id);
+            userId = UUID.fromString(id);
         } catch (NumberFormatException e) {
             throw new UsernameNotFoundException("ID de usuário inválido: " + id);
         }

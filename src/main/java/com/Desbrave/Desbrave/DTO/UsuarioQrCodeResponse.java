@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class UsuarioQrCodeResponse {
-    private Long id;
+    private UUID id;
     private UsuarioResponse usuario;
     private QrCodeResponse qrCode;
     private LocalDateTime dataEscaneamento;

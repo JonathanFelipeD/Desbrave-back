@@ -4,11 +4,11 @@ package com.Desbrave.Desbrave.model;
 import com.Desbrave.Desbrave.constants.Usado;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -26,8 +26,8 @@ import lombok.NoArgsConstructor;
 public class UsuarioCupom {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long idUsuarioCupom;
+    @GeneratedValue
+    private UUID idUsuarioCupom;
 
     @Column(nullable =  false)
     private LocalDate dataResgate;
@@ -50,7 +50,7 @@ public class UsuarioCupom {
     }
 
 
-    public UsuarioCupom adicionarCupomAoUsuario(Long usuarioId, UsuarioCupom cupom2) {
+    public UsuarioCupom adicionarCupomAoUsuario(UUID usuarioId, UsuarioCupom cupom2) {
        
         throw new UnsupportedOperationException("Unimplemented method 'adicionarCupomAoUsuario'");
     }

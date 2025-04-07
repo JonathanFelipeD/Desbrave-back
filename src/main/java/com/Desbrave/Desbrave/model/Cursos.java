@@ -1,10 +1,11 @@
 package com.Desbrave.Desbrave.model;
+import java.util.UUID;
+
 import com.Desbrave.Desbrave.constants.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.EnumType;
@@ -26,9 +27,9 @@ import lombok.NoArgsConstructor;
     public class Cursos {
     
         @Id
-        @GeneratedValue(strategy = GenerationType.UUID)
+        @GeneratedValue
         @Column(name = "idcursos")
-        private int idcursos;
+        private UUID idcursos;
     
         @Column(nullable = true, length = 45)
         private String titulo;

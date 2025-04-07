@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 @Service
 public class QrCodeService {
 
@@ -24,7 +25,7 @@ private final QrCodeRepository qrCodeRepository;
         return qrCodeRepository.save(qrCode);
     }
 
-    public Optional<QrCode> atualizarQrCode(Long id, QrCode qrCodeAtualizado) {
+    public Optional<QrCode> atualizarQrCode(UUID id, QrCode qrCodeAtualizado) {
         return qrCodeRepository.findById(id).map(qrCode -> {
             qrCode.setCodigo(qrCodeAtualizado.getCodigo());
             return qrCodeRepository.save(qrCode);
@@ -35,13 +36,13 @@ private final QrCodeRepository qrCodeRepository;
         return qrCodeRepository.findAll();
     }
 
-    public Optional<QrCode> buscarQrCodePorId(Long id) {
+    public Optional<QrCode> buscarQrCodePorId(UUID id) {
         return qrCodeRepository.findById(id);
     }
 
     
 
-    public boolean deletarQrCode(Long id) {
+    public boolean deletarQrCode(UUID id) {
         return qrCodeRepository.findById(id).map(qrCode -> {
             qrCodeRepository.delete(qrCode);
             return true;

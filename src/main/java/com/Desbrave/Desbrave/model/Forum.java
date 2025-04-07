@@ -3,6 +3,7 @@ package com.Desbrave.Desbrave.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,7 +14,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -33,9 +33,9 @@ import lombok.Setter;
 public class Forum {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
     @Column(name = "id_forum")
-    private Long id;
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     private Titulo titulo;
@@ -57,7 +57,7 @@ public class Forum {
     private Usuario usuario;
 
    
-    public Long getUsuarioId() {
+    public UUID getUsuarioId() {
         return this.usuario != null ? this.usuario.getId() : null;
     }
     

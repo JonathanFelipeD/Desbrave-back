@@ -1,5 +1,7 @@
 package com.Desbrave.Desbrave.controller;
 
+import java.util.UUID;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +26,7 @@ public class UsuarioCupomController {
 
     @PostMapping("/usuario/{usuarioId}")
     @Operation(summary = "Adicionar cupom ao usuario quando ele resgatar")
-    public UsuarioCupom adicionCupomAoUsuario(@PathVariable Long usuarioId, @RequestBody UsuarioCupom cupom){
+    public UsuarioCupom adicionCupomAoUsuario(@PathVariable UUID usuarioId, @RequestBody UsuarioCupom cupom){
         return usuarioCupomService.adicionarCupomAoUsuario(usuarioId, cupom);
     }
 }

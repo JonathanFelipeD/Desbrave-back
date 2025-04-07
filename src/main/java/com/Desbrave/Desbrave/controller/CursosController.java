@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import com.Desbrave.Desbrave.model.Cursos;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -34,7 +35,7 @@ public class CursosController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Buscar curso por id", description = "Busca um curso pelo id")
-    public ResponseEntity<Cursos> buscarPorId(@PathVariable int id) {
+    public ResponseEntity<Cursos> buscarPorId(@PathVariable UUID id) {
         return cursosService.buscarPorId(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -51,7 +52,7 @@ public class CursosController {
     
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar um curso", description = "Atualiza um curso pelo id")
-    public ResponseEntity<Cursos> atualizarCurso(@PathVariable int id, @RequestBody Cursos cursoAtualizado) {
+    public ResponseEntity<Cursos> atualizarCurso(@PathVariable UUID id, @RequestBody Cursos cursoAtualizado) {
         try {
             Cursos curso = cursosService.atualizarCurso(id, cursoAtualizado);
             return ResponseEntity.ok(curso);
@@ -62,7 +63,7 @@ public class CursosController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar um curso", description = "Deleta um curso pelo id")
-    public ResponseEntity<Void> deletarCurso(@PathVariable int id) {
+    public ResponseEntity<Void> deletarCurso(@PathVariable UUID id) {
         try {
             cursosService.deletarCurso(id);
             return ResponseEntity.noContent().build();

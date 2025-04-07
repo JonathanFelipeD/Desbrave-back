@@ -3,14 +3,15 @@ package com.Desbrave.Desbrave.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.UUID;
 @Data
 @Entity
 @Table(name = "tokens_recuperacao")
 public class TokenRecuperacao {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
     
     @Column(nullable = false, unique = true)
     private String token;

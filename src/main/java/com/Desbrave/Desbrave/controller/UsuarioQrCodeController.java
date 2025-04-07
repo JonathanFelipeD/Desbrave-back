@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/usuario-qrcode")
@@ -26,12 +27,12 @@ public class UsuarioQrCodeController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public List<UsuarioQrCodeResponse> buscarPorUsuario(@PathVariable Long usuarioId) {
+    public List<UsuarioQrCodeResponse> buscarPorUsuario(@PathVariable UUID usuarioId) {
         return service.buscarAssociacoesPorUsuarioId(usuarioId);
     }
 
     @GetMapping("/qrcode/{qrCodeId}")
-    public List<UsuarioQrCodeResponse> buscarPorQrCode(@PathVariable Long qrCodeId) {
+    public List<UsuarioQrCodeResponse> buscarPorQrCode(@PathVariable UUID qrCodeId) {
         return service.buscarAssociacoesPorQrCodeId(qrCodeId);
     }
 }

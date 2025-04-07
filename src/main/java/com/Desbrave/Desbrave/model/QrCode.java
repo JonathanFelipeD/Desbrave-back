@@ -1,9 +1,10 @@
 package com.Desbrave.Desbrave.model;
 
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,8 @@ import lombok.Setter;
 public class QrCode {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private Long id;
+    @GeneratedValue
+    private UUID id;
     
     private String codigo;
 

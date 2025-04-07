@@ -10,6 +10,7 @@ import com.Desbrave.Desbrave.model.Cursos;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class CursosService {
     }
 
  
-    public Optional<Cursos> buscarPorId(int id) {
+    public Optional<Cursos> buscarPorId(UUID id) {
         return cursosRepository.findById(id);
     }
 
@@ -32,7 +33,7 @@ public class CursosService {
         return cursosRepository.save(curso);
     }
 
-    public Cursos atualizarCurso(int id, Cursos cursoAtualizado) {
+    public Cursos atualizarCurso(UUID id, Cursos cursoAtualizado) {
         return cursosRepository.findById(id)
                 .map(curso -> {
                     curso.setTitulo(cursoAtualizado.getTitulo());
@@ -45,7 +46,7 @@ public class CursosService {
                 }).orElseThrow(() -> new RuntimeException("Curso com ID " + id + " não encontrado."));
     }
 
-    public void deletarCurso(int id) {
+    public void deletarCurso(UUID id) {
         if (cursosRepository.existsById(id)) {
             cursosRepository.deleteById(id);
         } else {

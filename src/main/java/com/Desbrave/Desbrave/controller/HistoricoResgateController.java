@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
-
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +27,7 @@ public class HistoricoResgateController {
 
     @GetMapping("/usuario/{usuarioId}")
     @Operation(summary = "Buscar historico de resgate por usuario")
-    public List<HistoricoResgate> buscarHistoricoResgatePorUsuario(@PathVariable Long usuarioId) {
+    public List<HistoricoResgate> buscarHistoricoResgatePorUsuario(@PathVariable UUID usuarioId) {
         return historicoResgateRepository.findByUsuarioId(usuarioId);
     }
 

@@ -1,13 +1,15 @@
 package com.Desbrave.Desbrave.model;
 
 import com.Desbrave.Desbrave.constants.TipoParceria;
+
+import java.util.UUID;
+
 import com.Desbrave.Desbrave.constants.StatusParceria;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -21,9 +23,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "parceria")
 public class Parceria {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
     @Column(name = "idParceria")
-    private Integer idParceria;
+    private UUID idParceria;
     @Column(nullable = false, length = 100)
     private String nome;
     @Enumerated(EnumType.STRING)

@@ -37,7 +37,7 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario buscarPorId(Long id) {
+    public Usuario buscarPorId(UUID id) {
         return usuarioRepository.findById(id).orElse(null);
     }
 
@@ -47,7 +47,7 @@ public class UsuarioService {
 
    
 
-   public Usuario atualizar(Long id, UsuarioUpdateDTO usuarioUpdateDTO) {
+   public Usuario atualizar(UUID id, UsuarioUpdateDTO usuarioUpdateDTO) {
     if (usuarioRepository.existsById(id)) {
         Usuario usuarioExistente = usuarioRepository.findById(id).orElse(null);
         
@@ -69,7 +69,7 @@ public class UsuarioService {
     return null;
 }
     
-    public Boolean deletar(Long id) {
+    public Boolean deletar(UUID id) {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
             return true;
@@ -145,11 +145,9 @@ public class UsuarioService {
         }
     }
 
-    public List<UsuarioCursoDTO> listarCursosIniciadosPorUsuario(Long usuarioId) {
-    // Busca todos os cursos iniciados pelo usuário através do repositório
+    public List<UsuarioCursoDTO> listarCursosIniciadosPorUsuario(UUID usuarioId) {
     List<CursoUsuario> cursosIniciados = cursoUsuarioRepository.findByUsuarioId(usuarioId);
 
-    // Mapeia os cursos para a lista de DTOs
     return cursosIniciados.stream()
             .map(cursoUsuario -> new UsuarioCursoDTO(
                     cursoUsuario.getCurso().getTitulo(),
@@ -159,21 +157,19 @@ public class UsuarioService {
             .collect(Collectors.toList());
 }
 
-public int contarCursosIniciados(Long usuarioId) {
-    // Busca a quantidade de cursos iniciados pelo usuário através do repositório
+public int contarCursosIniciados(UUID usuarioId) {
     return cursoUsuarioRepository.countByUsuarioId(usuarioId);
 }
-    // ✅ NOVO MÉTODO ADICIONADO - retorna lista com progresso dos cursos iniciados pelo usuário
-    public List<UsuarioCursoDTO> listarCursosComProgresso(Long usuarioId) {
-        // Busca todos os cursos iniciados pelo usuário através do repositório
+   
+    public List<UsuarioCursoDTO> listarCursosComProgresso(UUID usuarioId) {
+       
         List<CursoUsuario> cursosIniciados = cursoUsuarioRepository.findByUsuarioId(usuarioId);
     
-        // Se a lista de cursos estiver vazia, retorna uma lista vazia
+       
         if (cursosIniciados.isEmpty()) {
-            return List.of(); // Retorna lista vazia se não houver cursos
+            return List.of(); 
         }
     
-        // Mapeia os cursos para a lista de DTOs
         return cursosIniciados.stream()
                 .map(cursoUsuario -> new UsuarioCursoDTO(
                         cursoUsuario.getCurso().getTitulo(),

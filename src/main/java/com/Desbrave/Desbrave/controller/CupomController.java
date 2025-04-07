@@ -1,7 +1,7 @@
 package com.Desbrave.Desbrave.controller;
 
 import java.util.List;
-
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +46,7 @@ public class CupomController {
     @ApiResponse(responseCode = "200", description = "Cupom deletado com sucesso")
     @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    public void deletarCupom(@PathVariable("id") Long idCupom) {
+    public void deletarCupom(@PathVariable("id") UUID idCupom) {
         cupomService.deletarCupom(idCupom);
     }
 
@@ -55,7 +55,7 @@ public class CupomController {
     @ApiResponse(responseCode = "200", description = "Cupom atualizado com sucesso")
     @ApiResponse(responseCode = "404", description = "Cupom não encontrado")
     @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    public Cupom atualizarCupomPeloId(@PathVariable("id") Long idCupom, @RequestBody Cupom cupom) {
+    public Cupom atualizarCupomPeloId(@PathVariable("id") UUID idCupom, @RequestBody Cupom cupom) {
         return cupomService.atualizarCupom(idCupom, cupom);
     }
 }

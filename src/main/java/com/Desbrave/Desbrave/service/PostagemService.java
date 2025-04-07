@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,14 +45,14 @@ public class PostagemService {
                 .collect(Collectors.toList());
     }
 
-    public void deletarPostagem(Long id) {
+    public void deletarPostagem(UUID id) {
         if (!postagemRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada");
         }
         postagemRepository.deleteById(id);
     }
 
-    public PostagemResponse atualizarPostagem(Long id, PostagemRequest request) {
+    public PostagemResponse atualizarPostagem(UUID id, PostagemRequest request) {
         Postagem postagem = postagemRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Postagem não encontrada"));
 
