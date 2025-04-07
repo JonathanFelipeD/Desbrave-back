@@ -24,13 +24,11 @@ import lombok.RequiredArgsConstructor;
 public class AutenticacaoService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
-   
     private final TokenRecuperacaoRepository tokenRecuperacaoRepository;
     private final EmailServiceImpl emailServiceImpl;
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-
         Long userId;
         try {
             userId = Long.parseLong(id);
@@ -48,14 +46,9 @@ public class AutenticacaoService implements UserDetailsService {
                 .build();
     }
 
-   
-
     public void recuperarSenha(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado com esse e-mail."));
-        if (usuario == null) {
-            throw new IllegalArgumentException("Usuário não encontrado com esse e-mail.");
-        }
 
         String token = UUID.randomUUID().toString();
         TokenRecuperacao tokenRecuperacao = new TokenRecuperacao();
@@ -87,8 +80,6 @@ public class AutenticacaoService implements UserDetailsService {
     }
 
     public void invalidarToken(String token) {
-    
         SecurityContextHolder.clearContext();
-       
     }
 }

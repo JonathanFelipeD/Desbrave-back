@@ -1,5 +1,8 @@
 package com.Desbrave.Desbrave.controller;
 
+import com.Desbrave.Desbrave.model.Usuario;
+import com.Desbrave.Desbrave.repository.UsuarioRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Desbrave.Desbrave.DTO.LoginRequest;
@@ -33,52 +36,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @SecurityRequirement(name = SecurityConfig.SECURITY)
 public class AutenticacaoController {
 
-    
     private final AutenticacaoService autenticacaoService;
-
     private final AuthenticationManager authenticationManager;
-
     private final TokenService tokenService;
+    private final UsuarioRepository usuarioRepository; // Adicionado para buscar ID
 
-   
-
-    
-    @SuppressWarnings({"UseSpecificCatch"})
-    @Operation(summary = "Autentica um usuário", description = "Autentica um usuário e retorna um token de acesso")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Usuário autenticado com sucesso"),
-        @ApiResponse(responseCode = "401", description = "Credenciais inválidas"),
-        @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-    })
     @PostMapping("/login")
-public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
-    try {
-        var usuarioSenha = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getSenha());
-        var auth = authenticationManager.authenticate(usuarioSenha);
-        String idAuth = auth.getName();
-        var token = tokenService.gerarToken(idAuth);
-        return ResponseEntity.ok(new LoginResponseDTO(token));
-    } catch (BadCredentialsException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciais inválidas");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno no servidor");
-    }
-}
+    public ResponseEntity<?> login(@RequestBody @Validated LoginRequest loginRequest) {
+        try {
 
-    
+            Usuario usuario = usuarioRepository.findByEmail(loginRequest.getEmail())
+                    .orElseThrow(() -> new BadCredentialsException("Usuário não encontrado"));
+
+
+            if (!new BCryptPasswordEncoder().matches(loginRequest.getSenha(), usuario.getSenha())) {
+                throw new BadCredentialsException("Senha incorreta");
+            }
+
+
+            String token = tokenService.gerarToken(usuario.getId().toString());
+
+            return ResponseEntity.ok(new LoginResponseDTO(token));
+
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erro interno: " + e.getMessage());
+        }
+    }
+
     @PostMapping("/logout")
-public ResponseEntity<String> logout(@RequestBody String token) {
-    if (token == null || token.isEmpty()) {
-        return ResponseEntity.badRequest().body("Token inválido ou não fornecido");
+    public ResponseEntity<String> logout(@RequestBody String token) {
+        if (token == null || token.isEmpty()) {
+            return ResponseEntity.badRequest().body("Token inválido ou não fornecido");
+        }
+        try {
+            autenticacaoService.invalidarToken(token);
+            return ResponseEntity.ok("Logout realizado com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar logout");
+        }
     }
-    try {
-        autenticacaoService.invalidarToken(token);
-        return ResponseEntity.ok("Logout realizado com sucesso");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao realizar logout");
-    }
-}
-    
-
 }
 

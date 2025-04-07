@@ -5,10 +5,12 @@ import java.util.Optional;
 
 
 import com.Desbrave.Desbrave.model.Usuario;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.Desbrave.Desbrave.repository.UsuarioRepository;
@@ -23,50 +25,46 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityFilter extends OncePerRequestFilter {
 
-    
     private final TokenService tokenService;
-
-  
     private final UsuarioRepository usuarioRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        var token = this.recoverToken(request);
+        String token = extractToken(request);
 
-        if(token != null){
+        if (token != null) {
             try {
-                var login = tokenService.validacaoToken(token);
-                Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(login);
-
-                if (usuarioOptional.isPresent()) {
-                    Usuario usuario = usuarioOptional.get();
-
-
-                    String authority = "ROLE_" + usuario.getTipoUsuario().name();
-
-                    UserDetails userDetails = User.withUsername(usuario.getEmail())
-                            .password(usuario.getSenha())
-                            .accountExpired(false)
-                            .authorities(authority)
-                            .build();
-
-                    var autenticacao = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    SecurityContextHolder.getContext().setAuthentication(autenticacao);
+                String userId = tokenService.validarToken(token);
+                if (userId != null) {
+                    usuarioRepository.findById(Long.parseLong(userId))
+                            .ifPresent(this::authenticateUser);
                 }
             } catch (Exception e) {
-                SecurityContextHolder.clearContext();
-
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token inválido");
+                return;
             }
         }
+
         filterChain.doFilter(request, response);
     }
 
-    private String recoverToken(HttpServletRequest request){
-        var autorizacaoHeader = request.getHeader("Authorization");
-        if(autorizacaoHeader == null){return null;}
-        return autorizacaoHeader.replace("Bearer ", "");
+    private String extractToken(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        return (header != null && header.startsWith("Bearer ")) ?
+                header.substring(7) : null;
+    }
+
+    private void authenticateUser(Usuario usuario) {
+        UserDetails userDetails = User.builder()
+                .username(usuario.getId().toString())
+                .password(usuario.getSenha())
+                .roles(usuario.getTipoUsuario().name())
+                .build();
+
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()));
     }
 }
