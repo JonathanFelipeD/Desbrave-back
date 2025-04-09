@@ -37,8 +37,8 @@ public class ForumController {
     
     @Operation(summary = "Listar Forum", description = "Lista todos os Forum cadastrados")
     @GetMapping
-    public List<ForumView> getAllForuns() {
-        return forumRepository.findAllProjected();
+    public List<Forum> listarTodos() {
+        return forumService.listarTodos();
     }
 
     @Operation(summary = "Criar Forum", description = "Cria um novo Forum")

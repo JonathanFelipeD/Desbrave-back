@@ -18,28 +18,24 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class ForumService {
-
     private final UsuarioRepository usuarioRepository;
     private final ForumRepository forumRepository;
 
+
     public List<Forum> listarTodos() {
-        return forumRepository.findAll();
+        return forumRepository.findAll(); // Método padrão do JpaRepository
     }
 
-    public Optional<Forum> buscarPorId(UUID id) {
-        return forumRepository.findById(id); 
+    public List<Forum> listarPorUsuario(UUID usuarioId) {
+        return forumRepository.findByUsuario_Id(usuarioId);
     }
 
-    
+
     @Transactional
     public Forum criarForum(ForumRequest request) {
-       
-        
         Forum forum = new Forum();
-        forum.setTitulo(request.getTitulo()); 
+        forum.setTitulo(request.getTitulo());
         forum.setDescricao(request.getDescricao());
-    
-        
         return forumRepository.save(forum);
     }
 
@@ -52,8 +48,6 @@ public class ForumService {
         return forumRepository.findById(id).map(forum -> {
             forum.setTitulo(forumAtualizado.getTitulo());
             forum.setDescricao(forumAtualizado.getDescricao());
-            
-            
             return forumRepository.save(forum);
         }).orElseThrow(() -> new RuntimeException("Fórum não encontrado"));
     }

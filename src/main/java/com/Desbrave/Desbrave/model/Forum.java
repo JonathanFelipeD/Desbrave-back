@@ -49,9 +49,8 @@ public class Forum {
     private List<Postagem> postagens = new ArrayList<>();
 
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id") 
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
    

@@ -1,5 +1,6 @@
 package com.Desbrave.Desbrave.DTO;
 
+import com.Desbrave.Desbrave.constants.Titulo;
 import lombok.Data;
 
 import java.util.UUID;
@@ -7,7 +8,7 @@ import java.util.UUID;
 @Data
 public class MensagemForumRequest {
     private UUID usuarioId;
-    private String tituloForum;
+    private Titulo tituloForum;
     private String conteudo;
 }
 
